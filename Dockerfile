@@ -7,10 +7,10 @@ RUN echo -e '\n' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/
     cd "$(brew --repo)" && git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git && \
     cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core" && git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git && \
     # 安装 oh-my-zsh
-    echo 'y' | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
+    echo 'y' | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     # brew 环境变量
     echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/linuxbrew-bottles/bottles #ckbrew' >> ~/.zshrc && \
-    echo 'eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv) #ckbrew' >> ~/.zshrc && \
+    echo 'eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv) #ckbrew' >> ~/.zshrc 
     # 安装 code-server 插件
     # code-server --install-extension ms-python.python golang.Go eamodio.gitlens ms-kubernetes-tools.vscode-kubernetes-tools ms-azuretools.vscode-docker vscode-icons-team.vscode-icons formulahendry.auto-close-tag formulahendry.auto-close-tag formulahendry.auto-close-tag tumido.crd-snippets zhanghua.vscodium-language-pack-zh-cn
 
