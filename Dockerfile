@@ -3,14 +3,17 @@ FROM codercom/code-server:4.2.0
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential vim dnsutils net-tools telnet golang python3 openssh-server && \
+RUN apt update && apt install -y build-essential vim dnsutils net-tools telnet golang python3 python3-pip openssh-server && \
+    # python 工具
+    pip3 install ydcv
     # k8s 工具
     curl -Lo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x /usr/local/bin/kubectl && \
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     # 时区
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
     # 配置 openssh
     mkdir -p /var/run/sshd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
-    sed -i '/^exec/i exec dumb-init /usr/sbin/sshd -D &' /usr/bin/entrypoint.sh && \
+    sed -i '/^exec/i sudo dumb-init /usr/sbin/sshd -D &' /usr/bin/entrypoint.sh && \
     echo "root 用户命令执行完毕..."
 
 USER coder
