@@ -10,7 +10,7 @@ RUN apt update && apt install -y build-essential vim dnsutils net-tools telnet g
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
     # 配置 openssh
     mkdir -p /var/run/sshd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
-    sed -e '/^exec/i exec dumb-init /usr/sbin/sshd -D &' /usr/bin/entrypoint.sh && \
+    sed -i '/^exec/i exec dumb-init /usr/sbin/sshd -D &' /usr/bin/entrypoint.sh && \
     echo "root 用户命令执行完毕..."
 
 USER coder
