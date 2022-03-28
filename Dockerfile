@@ -2,12 +2,16 @@ FROM codercom/code-server:4.2.0
 
 ENV NPS_VERSION="v0.26.10"
 
+ENV CLASH_VERSION="v1.10.0"
+
+ENV ZSH_COMPDUMP="/home/coder/.zcompdump"
+
 COPY ./start.sh /opt/start.sh
 
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential vim dnsutils net-tools telnet golang python3 python3-pip openssh-server openconnect && \
+RUN apt update && apt install -y build-essential crons vim dnsutils net-tools telnet golang python3 python3-pip openssh-server openconnect && \
     # python 工具
     pip3 install ydcv && \
     # k8s 工具
@@ -18,6 +22,10 @@ RUN apt update && apt install -y build-essential vim dnsutils net-tools telnet g
     curl -Lo /tmp/npc/linux_amd64_client.tar.gz https://github.com/ehang-io/nps/releases/download/${NPS_VERSION}/linux_amd64_client.tar.gz && \
     tar zxvf /tmp/npc/linux_amd64_client.tar.gz -C /tmp/npc && \
     /tmp/npc/npc install && rm -rf /tmp/npc && \
+    # clash 客户端
+    curl -Lo /tmp/clash-linux-amd64.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-amd64-v1.10.0.gz && \
+    cat /tmp/clash-linux-amd64.gz | gzip -d > /usr/local/bin/clash && \
+    chmod +x /usr/local/bin/clash && rm -rf /tmp/clash-linux-amd64.gz && \
     # 时区
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
     # 配置 openssh，这里需要固化 ssh server 的密钥
