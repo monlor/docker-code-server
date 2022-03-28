@@ -11,8 +11,9 @@ echo "n" | ssh-keygen -t dsa -f /home/coder/.ssh/ssh_host_ed25519_key -N "" || t
 sudo dumb-init /usr/sbin/sshd -D &
 
 # 启动 npc
+echo "nps服务：${NPS_SERVER}"
 if [ -n "${NPS_SERVER}" -a -n "${NPS_KEY}" ]; then
-    dumb-init npc -server=${NPS_SERVER} -vkey=${NPS_KEY} -type=${NPS_TYPE:-tcp} &
+    nohup npc -server=${NPS_SERVER} -vkey=${NPS_KEY} -type=${NPS_TYPE:-tcp} &
 fi
 
 if [ ! -d ${HOME}/.oh-my-zsh ]; then
