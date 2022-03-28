@@ -14,14 +14,14 @@ echo "n" | ssh-keygen -t dsa -f /home/coder/.ssh/ssh_host_ed25519_key -N "" || t
 sudo dumb-init /usr/sbin/sshd -D &
 
 # 启动 npc
-echo "nps 配置：${NPS_SERVER}"
 if [ -n "${NPS_SERVER}" -a -n "${NPS_KEY}" ]; then
+    echo "配置 nps..."
     nohup npc -server=${NPS_SERVER} -vkey=${NPS_KEY} -type=${NPS_TYPE:-tcp} &
 fi
 
 # 启动 clash
-echo "clash 配置：${CLASH_SUB_URL}"
 if [ -n "${CLASH_SUB_URL}" ]; then
+    echo "配置 clash..."
     if [ ! -d "${HOME}/.config/clash" ]; then
         mkdir -p ${HOME}/.config/clash
     fi
@@ -29,8 +29,9 @@ if [ -n "${CLASH_SUB_URL}" ]; then
 fi
 
 if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
+    echo "安装 oh-my-zsh ..."
     # 安装 oh-my-zsh
-    echo 'y' | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    echo 'y' | sh -c "$(curl -fsSL https://github.do/https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     # brew 环境变量
     echo 'eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv) #ckbrew' >> ${HOME}/.zshrc 
     # 自定义环境变量
