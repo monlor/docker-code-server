@@ -11,13 +11,17 @@ RUN apt update && apt install -y build-essential vim dnsutils net-tools telnet g
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     # 时区
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
-    # 配置 openssh
+    # 配置 openssh，这里需要固化 ssh server 的密钥
     mkdir -p /var/run/sshd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
-    echo -e 'HostKey /home/coder/.ssh/ssh_host_rsa_key\nHostKey /home/coder/.ssh/ssh_host_ecdsa_key\nHostKey /home/coder/.ssh/ssh_host_ed25519_key' >> /etc/ssh/sshd_config && \
+    echo 'HostKey /home/coder/.ssh/ssh_host_rsa_key' >> /etc/ssh/sshd_config && \
+    echo 'HostKey /home/coder/.ssh/ssh_host_ecdsa_key' >> /etc/ssh/sshd_config && \
+    echo 'HostKey /home/coder/.ssh/ssh_host_ed25519_key' >> /etc/ssh/sshd_config && \
     sed -i '/^exec/i echo "n" | ssh-keygen -q -t rsa -b 2048 -f /home/coder/.ssh/ssh_host_rsa_key -N "" || true' /usr/bin/entrypoint.sh && \ 
     sed -i '/^exec/i echo "n" | ssh-keygen -q -t ecdsa -f /home/coder/.ssh/ssh_host_ecdsa_key -N "" || true' /usr/bin/entrypoint.sh && \ 
     sed -i '/^exec/i echo "n" | ssh-keygen -t dsa -f /home/coder/.ssh/ssh_host_ed25519_key -N "" || true' /usr/bin/entrypoint.sh && \ 
     sed -i '/^exec/i sudo dumb-init /usr/sbin/sshd -D &' /usr/bin/entrypoint.sh && \
+    # 修改用户默认 shell
+    usermod -s /bin/zsh coder && \
     echo "root 用户命令执行完毕..."
 
 USER coder
