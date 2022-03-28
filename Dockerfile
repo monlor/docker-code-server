@@ -8,7 +8,7 @@ RUN echo -e '\n' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/
     # brew 环境变量
     echo 'eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv) #ckbrew' >> ~/.zshrc && \
     # 安装常用工具
-    sudo apt update && apt install -y build-essential vim dnsutils net-tools telnet golang python3 && \
+    sudo apt update && sudo apt install -y build-essential vim dnsutils net-tools telnet golang python3 && \
     # k8s 工具
     sudo curl -Lo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo chmod +x /usr/local/bin/kubectl && \
     # 安装 brew 工具
