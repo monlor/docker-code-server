@@ -11,7 +11,7 @@ COPY ./start.sh /opt/start.sh
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential crons vim dnsutils net-tools telnet golang python3 python3-pip openssh-server openconnect && \
+RUN apt update && apt install -y build-essential cron vim dnsutils net-tools telnet golang python3 python3-pip openssh-server openconnect && \
     # python 工具
     pip3 install ydcv && \
     # k8s 工具
