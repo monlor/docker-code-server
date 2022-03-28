@@ -28,7 +28,7 @@ if [ -n "${CLASH_SUB_URL}" ]; then
     curl -#Lo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL}
 fi
 
-if [ ! -d ${HOME}/.oh-my-zsh ]; then
+if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
     # 安装 oh-my-zsh
     echo 'y' | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     # brew 环境变量
