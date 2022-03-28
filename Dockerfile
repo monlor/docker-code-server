@@ -13,6 +13,10 @@ RUN apt update && apt install -y build-essential vim dnsutils net-tools telnet g
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
     # 配置 openssh
     mkdir -p /var/run/sshd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
+    echo -e 'HostKey /home/coder/.ssh/ssh_host_rsa_key\nHostKey /home/coder/.ssh/ssh_host_ecdsa_key\nHostKey /home/coder/.ssh/ssh_host_ed25519_key' >> /etc/ssh/sshd_config && \
+    sed -i '/^exec/i echo "n" | ssh-keygen -q -t rsa -b 2048 -f /home/coder/.ssh/ssh_host_rsa_key -N "" || true' /usr/bin/entrypoint.sh && \ 
+    sed -i '/^exec/i echo "n" | ssh-keygen -q -t ecdsa -f /home/coder/.ssh/ssh_host_ecdsa_key -N "" || true' /usr/bin/entrypoint.sh && \ 
+    sed -i '/^exec/i echo "n" | ssh-keygen -t dsa -f /home/coder/.ssh/ssh_host_ed25519_key -N "" || true' /usr/bin/entrypoint.sh && \ 
     sed -i '/^exec/i sudo dumb-init /usr/sbin/sshd -D &' /usr/bin/entrypoint.sh && \
     echo "root 用户命令执行完毕..."
 
