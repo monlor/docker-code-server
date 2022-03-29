@@ -33,12 +33,19 @@ if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
     rm -rf ${HOME}/.oh-my-zsh
     # 安装 oh-my-zsh
     echo 'y' | sh -c "$(curl -fsSL https://github.do/https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    # brew 环境变量
-    echo 'eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv) #ckbrew' >> ${HOME}/.zshrc 
-    # 自定义环境变量
-    sed -i '/^#/d' ${HOME}/.zshrc
-    sed -i '/^$/' ${HOME}/.zshrc
-    cat >> ${HOME}/.zshrc <<-EOF
+fi
+
+# 自定义环境变量
+cat > ${HOME}/.zshrc <<-EOF
+# oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
+# brew
+eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv)
+
 # alias
 alias upxx="upx --lzma --ultra-brute"
 
@@ -64,5 +71,3 @@ unsetproxy() {
     unset https_proxy
 }
 EOF
-fi
-
