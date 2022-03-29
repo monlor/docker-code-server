@@ -21,7 +21,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     pip3 install ydcv && \
     # autojump
     git clone https://github.com/joelthelion/autojump /tmp/autojump && \
-    cd /tmp/autojump && SHELL=/bin/bash ./install.py && rm -rf /tmp/autojump && \
+    cd /tmp/autojump && SHELL=/bin/bash ./install.py && cd - && rm -rf /tmp/autojump && \
     # npm 工具
     npm install --global trash-cli && \
     # k8s 工具
