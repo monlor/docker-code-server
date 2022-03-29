@@ -30,6 +30,7 @@ fi
 
 if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
     echo "安装 oh-my-zsh ..."
+    rm -rf ${HOME}/.oh-my-zsh
     # 安装 oh-my-zsh
     echo 'y' | sh -c "$(curl -fsSL https://github.do/https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     # brew 环境变量
