@@ -15,7 +15,7 @@ COPY ./extensions /opt/extensions
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat openconnect oathtool openssh-server golang python3 python3-pip nodejs npm && \
+RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool openssh-server golang python3 python3-pip nodejs npm && \
     # python 工具
     ln -sf /usr/bin/python3 /usr/bin/python && \
     pip3 install ydcv && \
@@ -23,7 +23,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     git clone https://github.com/joelthelion/autojump /tmp/autojump && \
     cd /tmp/autojump && SHELL=/bin/bash ./install.py && cd - && rm -rf /tmp/autojump && \
     # npm 工具
-    npm install --global trash-cli && \
+    npm install --global yarn tyarn && \
     # k8s 工具
     curl -Lo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x /usr/local/bin/kubectl && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
