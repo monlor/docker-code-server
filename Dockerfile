@@ -46,5 +46,5 @@ USER coder
 RUN echo -e '\n' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  && \
     eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv) && \
     # 安装 brew 工具
-    brew tap monlor/taps && brew install monlor/taps/gits && \
+    brew tap monlor/taps && brew install monlor/taps/gits docker && \
     echo "coder 用户命令执行完毕..."
