@@ -36,7 +36,20 @@ if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
     # brew 环境变量
     echo 'eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv) #ckbrew' >> ${HOME}/.zshrc 
     # 自定义环境变量
+    sed -i '/^#/d' ${HOME}/.zshrc
+    sed -i '/^$/' ${HOME}/.zshrc
     cat >> ${HOME}/.zshrc <<-EOF
+# alias
+alias upxx="upx --lzma --ultra-brute"
+
+# completion
+which helm &> /dev/null && source <(helm completion zsh)
+
+# env
+export GOPROXY=https://goproxy.io,direct
+export GOPATH=~/golang
+export GO111MODULE=auto
+
 setproxy() {
     sudo killall clash &> /dev/null &
     sleep 1

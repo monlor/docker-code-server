@@ -8,6 +8,8 @@ ENV ZSH_COMPDUMP="/home/coder/.zcompdump"
 
 COPY ./start.sh /opt/start.sh
 
+COPY ./extensions /opt/extensions
+
 USER root
 
 # 安装常用工具
