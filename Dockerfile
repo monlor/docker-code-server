@@ -15,7 +15,7 @@ COPY ./extensions /opt/extensions
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat openconnect openssh-server golang python3 python3-pip nodejs npm && \
+RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat openconnect oathtool openssh-server golang python3 python3-pip nodejs npm && \
     # python 工具
     ln -sf /usr/bin/python3 /usr/bin/python && \
     pip3 install ydcv && \
@@ -40,6 +40,9 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
     tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
     rm -rf docker-${DOCKER_VERSION}.tgz && \
+    # 安装 easyoc，easy openconnect
+    curl -fsSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
+    chmod +x /usr/local/bin/easyoc && \
     # 时区
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
     # 配置 openssh，这里需要固化 ssh server 的密钥
