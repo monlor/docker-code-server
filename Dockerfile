@@ -6,8 +6,6 @@ ENV CLASH_VERSION="v1.10.0"
 
 ENV DOCKER_VERSION="20.10.14"
 
-ENV BAT_VERSION="v0.20.0"
-
 ENV ZSH_COMPDUMP="/home/coder/.zcompdump"
 
 COPY ./start.sh /opt/start.sh
@@ -23,7 +21,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     pip3 install ydcv && \
     # autojump
     git clone https://github.com/joelthelion/autojump /tmp/autojump && \
-    cd /tmp/autojump && ./install.py && rm -rf /tmp/autojump && \
+    cd /tmp/autojump && SHELL=/bin/bash ./install.py && rm -rf /tmp/autojump && \
     # npm 工具
     npm install --global trash-cli && \
     # k8s 工具
