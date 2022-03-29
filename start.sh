@@ -36,7 +36,7 @@ if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
 fi
 
 # 自定义环境变量
-cat > ${HOME}/.zshrc <<-EOF
+cat > ${HOME}/.zshrc <<-\EOF
 # oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
@@ -58,8 +58,7 @@ export GOPATH=~/golang
 export GO111MODULE=auto
 
 setproxy() {
-    sudo killall clash &> /dev/null &
-    sleep 1
+    sudo killall clash &> /dev/null
     /usr/local/bin/clash &> /dev/null &
     export http_proxy=127.0.0.1:7890
     export https_proxy=127.0.0.1:7890
