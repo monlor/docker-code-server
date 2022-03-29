@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "172.20.6.252",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "开发环境",
+            "username": "polaris",
+            "password": "polaris112358",
+            "database": "hcf_base"
+        }
+    ]
+}

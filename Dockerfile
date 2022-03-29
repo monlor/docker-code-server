@@ -4,6 +4,10 @@ ENV NPS_VERSION="v0.26.10"
 
 ENV CLASH_VERSION="v1.10.0"
 
+ENV DOCKER_VERSION="20.10.14"
+
+ENV BAT_VERSION="v0.20.0"
+
 ENV ZSH_COMPDUMP="/home/coder/.zcompdump"
 
 COPY ./start.sh /opt/start.sh
@@ -13,9 +17,15 @@ COPY ./extensions /opt/extensions
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential cron vim dnsutils net-tools telnet golang python3 python3-pip openssh-server openconnect && \
+RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat openconnect openssh-server golang python3 python3-pip nodejs npm && \
     # python 工具
+    ln -sf /usr/bin/python3 /usr/bin/python && \
     pip3 install ydcv && \
+    # autojump
+    git clone https://github.com/joelthelion/autojump /tmp/autojump && \
+    cd /tmp/autojump && ./install.py && rm -rf /tmp/autojump && \
+    # npm 工具
+    npm install --global trash-cli && \
     # k8s 工具
     curl -Lo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x /usr/local/bin/kubectl && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
@@ -28,6 +38,10 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools tel
     curl -Lo /tmp/clash-linux-amd64.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-amd64-v1.10.0.gz && \
     cat /tmp/clash-linux-amd64.gz | gzip -d > /usr/local/bin/clash && \
     chmod +x /usr/local/bin/clash && rm -rf /tmp/clash-linux-amd64.gz && \
+    # 安装 docker 客户端
+    curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
+    tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
+    rm -rf docker-${DOCKER_VERSION}.tgz && \
     # 时区
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
     # 配置 openssh，这里需要固化 ssh server 的密钥
@@ -41,10 +55,3 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools tel
     echo "root 用户命令执行完毕..."
 
 USER coder
-
-# 安装 brew
-RUN echo -e '\n' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  && \
-    eval $(/home/linuxbrew/.linuxbrew/Homebrew/bin/brew shellenv) && \
-    # 安装 brew 工具
-    brew tap monlor/taps && brew install monlor/taps/gits docker && \
-    echo "coder 用户命令执行完毕..."
