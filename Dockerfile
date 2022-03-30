@@ -56,5 +56,5 @@ USER coder
 
 # autojump
 RUN git clone https://github.com/joelthelion/autojump /tmp/autojump && \
-    cd /tmp/autojump && ./install.py && cd - && rm -rf /tmp/autojump && \
+    cd /tmp/autojump && SHELL=/bin/zsh ./install.py && cd - && rm -rf /tmp/autojump && \
     cp -rf ~/.autojump /tmp/autojump
