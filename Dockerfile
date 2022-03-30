@@ -6,7 +6,7 @@ ENV CLASH_VERSION="v1.10.0"
 
 ENV DOCKER_VERSION="20.10.14"
 
-ENV ZSH_COMPDUMP="/home/coder/.zcompdump"
+ENV HOST="code-server"
 
 COPY ./start.sh /opt/start.sh
 
