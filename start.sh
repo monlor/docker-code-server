@@ -42,6 +42,9 @@ fi
 if [ ! -d ${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions ${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 fi
+if [ ! -d ${HOME}/.autojump ]; then
+    cp -rf /tmp/autojump ${HOME}/.autojump
+fi
 
 # 自定义环境变量
 cat > ${HOME}/.zshrc <<-\EOF

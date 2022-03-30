@@ -19,9 +19,6 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     # python 工具
     ln -sf /usr/bin/python3 /usr/bin/python && \
     pip3 install ydcv && \
-    # autojump
-    git clone https://github.com/joelthelion/autojump /tmp/autojump && \
-    cd /tmp/autojump && SHELL=/bin/bash ./install.py && cd - && rm -rf /tmp/autojump && \
     # npm 工具
     npm install --global yarn tyarn && \
     # k8s 工具
@@ -56,3 +53,8 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     echo "root 用户命令执行完毕..."
 
 USER coder
+
+# autojump
+RUN git clone https://github.com/joelthelion/autojump /tmp/autojump && \
+    cd /tmp/autojump && ./install.py && cd - && rm -rf /tmp/autojump && \
+    cp -rf ~/.autojump /tmp/autojump
