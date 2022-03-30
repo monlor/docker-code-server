@@ -15,10 +15,10 @@ COPY ./extensions /opt/extensions
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool openssh-server golang python3 python3-pip nodejs npm && \
+RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool mariadb-client openssh-server golang python3 python3-pip nodejs npm && \
     # python 工具
     ln -sf /usr/bin/python3 /usr/bin/python && \
-    pip3 install ydcv && \
+    pip3 install ydcv mycli && \
     # npm 工具
     npm install --global yarn tyarn && \
     # k8s 工具
