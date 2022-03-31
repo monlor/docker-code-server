@@ -6,6 +6,10 @@ ENV CLASH_VERSION="v1.10.0"
 
 ENV DOCKER_VERSION="20.10.14"
 
+ENV HELMFILE_VERSION="v0.144.0"
+
+ENV SOPS_VERSION="v3.7.2"
+
 ENV HOST="code-server"
 
 COPY ./start.sh /opt/start.sh
@@ -40,6 +44,12 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     # 安装 easyoc，easy openconnect
     curl -fsSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
     chmod +x /usr/local/bin/easyoc && \
+    # 安装 helmfile 
+    curl -Lo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
+    chmod + /usr/local/bin/helmfile && \
+    # 安装 sops
+    curl -Lo /usr/local/bin/sops https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 && \
+    chmod +x /usr/local/bin/sops && \
     # 时区
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
     # 配置 openssh，这里需要固化 ssh server 的密钥
