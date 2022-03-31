@@ -85,4 +85,7 @@ unsetproxy() {
     unset http_proxy
     unset https_proxy
 }
+
+# load user zshrc
+[ -f ${HOME}/.zshrc.user ] && source ${HOME}/.zshrc.user
 EOF
