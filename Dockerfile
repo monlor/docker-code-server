@@ -19,10 +19,10 @@ COPY ./extensions /opt/extensions
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool mariadb-client upx openssh-server golang python3 python3-pip nodejs npm age rsync tree && \
+RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool mariadb-client upx openssh-server golang python3 python3-pip nodejs npm age rsync tree jq && \
     # python 工具
     ln -sf /usr/bin/python3 /usr/bin/python && \
-    pip3 install ydcv mycli && \
+    pip3 install ydcv mycli yq && \
     # npm 工具
     npm install --global yarn tyarn && \
     # k8s 工具
