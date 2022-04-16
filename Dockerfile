@@ -1,4 +1,4 @@
-FROM codercom/code-server:4.2.0
+FROM codercom/code-server:4.3.0
 
 ENV NPS_VERSION="v0.26.10"
 
