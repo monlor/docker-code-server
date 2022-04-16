@@ -67,9 +67,9 @@ alias rm="trash"
 which helm &> /dev/null && source <(helm completion zsh)
 
 # env
-export GOPROXY=https://goproxy.io,direct
+export GO111MODULE=on
+export GOPROXY=https://goproxy.cn
 export GOPATH=~/golang
-export GO111MODULE=auto
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
 # default editor
