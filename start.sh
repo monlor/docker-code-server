@@ -53,7 +53,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
-export PATH=$PATH:/usr/sbin:/sbin
+export PATH=$PATH:/usr/sbin:/sbin:$HOME/.local/bin
 
 # plugin
 [[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source ${HOME}/.autojump/etc/profile.d/autojump.sh
@@ -72,6 +72,9 @@ export GOPATH=~/golang
 export GO111MODULE=auto
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
+# default editor
+export VISUAL=vim
+export EDITOR="$VISUAL"
 
 setproxy() {
     sudo killall clash &> /dev/null
