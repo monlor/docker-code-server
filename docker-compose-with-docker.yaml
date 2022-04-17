@@ -17,6 +17,7 @@ services:
     volumes:
     - code-server:/home/coder
     - docker-certs-client:/certs/client
+    - docker-data:/var/lib/docker
     ports:
     # ssh port for vscode remote ssh
     - 1022:22/tcp
@@ -41,6 +42,7 @@ volumes:
   code-server:
   docker-certs-ca:
   docker-certs-client:
+  docker-data:
 
 networks:
   general:
