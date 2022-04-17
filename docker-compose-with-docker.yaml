@@ -1,0 +1,46 @@
+version: '3'
+services:
+  code-server:
+    # sysctl.conf: fs.inotify.max_user_watches = 524288
+    image: monlor/code-server:main
+    container_name: code-server
+    hostname: code-server
+    # optional
+    environment:
+    # clash subscribe url
+    - CLASH_SUB_URL=
+    # ydcv secrets
+    - YDCV_YOUDAO_APPID=
+    - YDCV_YOUDAO_APPSEC=
+    # code-server password
+    - PASSWORD=
+    volumes:
+    - code-server:/home/coder
+    - docker-certs-client:/certs/client
+    ports:
+    # ssh port for vscode remote ssh
+    - 1022:22/tcp
+    restart: unless-stopped
+    networks:
+    - general
+  docker:
+    image: docker:stable-dind
+    container_name: docker
+    hostname: docker
+    environment:
+    - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+    - docker-certs-ca:/certs/ca
+    - docker-certs-client:/certs/client
+    privileged: true
+    restart: unless-stopped
+    networks:
+    - general
+
+volumes:
+  code-server:
+  docker-certs-ca:
+  docker-certs-client:
+
+networks:
+  general:

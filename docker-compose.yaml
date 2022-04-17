@@ -1,0 +1,31 @@
+version: '3'
+services:
+  code-server:
+    # sysctl.conf: fs.inotify.max_user_watches = 524288
+    image: monlor/code-server:main
+    container_name: code-server
+    hostname: code-server
+    # optional
+    environment:
+    # clash subscribe url
+    - CLASH_SUB_URL=
+    # ydcv secrets
+    - YDCV_YOUDAO_APPID=
+    - YDCV_YOUDAO_APPSEC=
+    # code-server password
+    - PASSWORD=
+    volumes:
+    - code-server:/home/coder
+    # optional
+    ports:
+    # ssh port for vscode remote ssh
+    - 1022:22/tcp
+    restart: unless-stopped
+    networks:
+    - general
+
+volumes:
+  code-server:
+
+networks:
+  general:
