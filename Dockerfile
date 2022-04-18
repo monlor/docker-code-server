@@ -1,5 +1,7 @@
 FROM codercom/code-server:4.3.0
 
+LABEL author=monlor
+
 ENV NPS_VERSION="v0.26.10"
 
 ENV CLASH_VERSION="v1.10.0"

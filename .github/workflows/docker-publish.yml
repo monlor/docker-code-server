@@ -92,3 +92,14 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: cosign sign ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
       
+      - name: Notification
+        uses: monlor/bark-action@v3
+        with:
+          host: ${{ secrets.BARK_HOST}} # not required
+          key: ${{ secrets.BARK_KEY }}   # Your secret key
+          title: Github Actions
+          body: '${{ github.repository }}发布完成！'
+          isArchive: 1
+          url: 'github://github.com/${{ github.repository }}'
+          group: Github
+          icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
