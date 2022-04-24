@@ -26,7 +26,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     ln -sf /usr/bin/python3 /usr/bin/python && \
     pip3 install ydcv mycli yq && \
     # npm 工具
-    npm install --global yarn tyarn && \
+    npm install --global yarn tyarn commitizen git-cz && \
     # k8s 工具
     curl -Lo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x /usr/local/bin/kubectl && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \

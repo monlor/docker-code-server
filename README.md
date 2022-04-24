@@ -12,6 +12,17 @@ deploy with docker compose
 
 [Deploy Code Server + Docker DinD](docker-compose-with-docker.yaml)
 
+## Tools
+
+### git cz
+
+run in your git project
+
+```bash
+commitizen init git-cz --save-dev --save-exact
+git cz
+```
+
 ## Custom
 
 ### Custom zshrc
