@@ -56,7 +56,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
-export PATH=$PATH:/usr/sbin:/sbin:$HOME/.local/bin
+export PATH=$HOME/golang/bin:$HOME/.local/bin:$PATH:/usr/sbin:/sbin
 
 # plugin
 [[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source ${HOME}/.autojump/etc/profile.d/autojump.sh
