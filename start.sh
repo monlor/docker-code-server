@@ -65,9 +65,11 @@ export PATH=$HOME/golang/bin:$HOME/.local/bin:$PATH:/usr/sbin:/sbin
 alias upxx="upx --lzma --ultra-brute"
 alias cp="cp -i"
 alias rm="trash"
+alias k="kubectl"
 
 # completion
 which helm &> /dev/null && source <(helm completion zsh)
+which kubectl &> /dev/null && source <(kubectl completion zsh)
 
 # env
 export GO111MODULE=on

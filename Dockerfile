@@ -32,25 +32,29 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     # nps 客户端
     mkdir /tmp/npc && \
-    curl -Lo /tmp/npc/linux_amd64_client.tar.gz https://github.com/ehang-io/nps/releases/download/${NPS_VERSION}/linux_amd64_client.tar.gz && \
+    curl -#Lo /tmp/npc/linux_amd64_client.tar.gz https://github.com/ehang-io/nps/releases/download/${NPS_VERSION}/linux_amd64_client.tar.gz && \
     tar zxvf /tmp/npc/linux_amd64_client.tar.gz -C /tmp/npc && \
     /tmp/npc/npc install && rm -rf /tmp/npc && \
     # clash 客户端
-    curl -Lo /tmp/clash-linux-amd64.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-amd64-v1.10.0.gz && \
+    curl -#Lo /tmp/clash-linux-amd64.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-amd64-v1.10.0.gz && \
     cat /tmp/clash-linux-amd64.gz | gzip -d > /usr/local/bin/clash && \
     chmod +x /usr/local/bin/clash && rm -rf /tmp/clash-linux-amd64.gz && \
     # 安装 docker 客户端
-    curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
+    curl -#fSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
     tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
     rm -rf docker-${DOCKER_VERSION}.tgz && \
+    # 安装 docker-slim 客户端
+    curl -#fSLO https://downloads.dockerslim.com/releases/1.37.5/dist_linux.tar.gz && \
+    tar zxvf dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/docker-slim && \
+    rm -rf dist_linux.tar.gz && \
     # 安装 easyoc，easy openconnect
     curl -fsSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
     chmod +x /usr/local/bin/easyoc && \
     # 安装 helmfile 
-    curl -Lo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
+    curl -#Lo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
     chmod + /usr/local/bin/helmfile && \
     # 安装 sops
-    curl -Lo /usr/local/bin/sops https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 && \
+    curl -#Lo /usr/local/bin/sops https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 && \
     chmod +x /usr/local/bin/sops && \
     # 时区
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
