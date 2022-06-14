@@ -45,7 +45,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     rm -rf docker-${DOCKER_VERSION}.tgz && \
     # 安装 docker-slim 客户端
     curl -#fSLO https://downloads.dockerslim.com/releases/1.37.5/dist_linux.tar.gz && \
-    tar zxvf dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/docker-slim && \
+    tar zxvf dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/ && \
     rm -rf dist_linux.tar.gz && \
     # 安装 easyoc，easy openconnect
     curl -fsSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
