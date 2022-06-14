@@ -8,6 +8,8 @@ ENV CLASH_VERSION="v1.10.0"
 
 ENV DOCKER_VERSION="20.10.14"
 
+ENV DOCKER_SLIM_VERSION="1.37.6"
+
 ENV HELMFILE_VERSION="v0.144.0"
 
 ENV SOPS_VERSION="v3.7.2"
@@ -44,7 +46,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
     rm -rf docker-${DOCKER_VERSION}.tgz && \
     # 安装 docker-slim 客户端
-    curl -#fSLO https://downloads.dockerslim.com/releases/1.37.5/dist_linux.tar.gz && \
+    curl -#fSLO https://downloads.dockerslim.com/releases/${DOCKER_SLIM_VERSION}/dist_linux.tar.gz && \
     tar zxvf dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/ && \
     rm -rf dist_linux.tar.gz && \
     # 安装 easyoc，easy openconnect
