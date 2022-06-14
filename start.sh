@@ -50,16 +50,16 @@ if [ ! -d ${HOME}/.autojump ]; then
 fi
 
 # 自定义环境变量
-cat > ${HOME}/.zshrc <<-\EOF
+cat > ${HOME}/.zshrc <<-EOF
 # oh-my-zsh
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="\$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
-source $ZSH/oh-my-zsh.sh
-export PATH=$HOME/golang/bin:$HOME/.local/bin:$PATH:/usr/sbin:/sbin
+source \$ZSH/oh-my-zsh.sh
+export PATH=\$HOME/golang/bin:\$HOME/.local/bin:\$PATH:/usr/sbin:/sbin
 
 # plugin
-[[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source ${HOME}/.autojump/etc/profile.d/autojump.sh
+[[ -s \${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source \${HOME}/.autojump/etc/profile.d/autojump.sh
 
 # alias
 alias upxx="upx --lzma --ultra-brute"
@@ -79,7 +79,7 @@ export GOPATH=~/golang
 export HIST_STAMPS="yyyy-mm-dd"
 # default editor
 export VISUAL=vim
-export EDITOR="$VISUAL"
+export EDITOR="\$VISUAL"
 # docker in docker
 export DOCKER_HOST=tcp://${DOCKER_DIND_HOST:-docker}:2376
 export DOCKER_CERT_PATH=${DOCKER_DIND_CERT_PATH:-"/certs/client"}
