@@ -16,6 +16,8 @@ ENV SOPS_VERSION="v3.7.2"
 
 ENV YQ_VERSION="v4.25.2"
 
+ENV KIND_VERSION="v0.14.0"
+
 ENV HOST="code-server"
 
 COPY ./start.sh /opt/start.sh
@@ -47,6 +49,8 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     # 安装 docker 客户端
     curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
     tar xzvf /tmp/docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
+    # 安装 kind
+    curl -#fSLo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64 && \
     # 安装 docker-slim 客户端
     curl -#fSLo /tmp/dist_linux.tar.gz https://downloads.dockerslim.com/releases/${DOCKER_SLIM_VERSION}/dist_linux.tar.gz && \
     tar zxvf /tmp/dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/ && \
