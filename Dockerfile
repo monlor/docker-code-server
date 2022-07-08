@@ -46,6 +46,9 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     ln -s /opt/kubectx/kubens /usr/local/bin/kubens && \
     curl -#fSLo /tmp/kubecm.tar.gz https://github.com/sunny0826/kubecm/releases/download/v${KUBECM_VERSION}/kubecm_${KUBECM_VERSION}_Linux_x86_64.tar.gz && \
     tar xzvf /tmp/kubecm.tar.gz -C /usr/local/bin kubecm && \
+    # vault
+    curl -#fSLo /tmp/vault_1.11.0_linux_amd64.zip https://releases.hashicorp.com/vault/1.11.0/vault_1.11.0_linux_amd64.zip && \
+    unzip /tmp/vault_1.11.0_linux_amd64.zip -d /usr/local/bin && \
     # nps 客户端
     mkdir /tmp/npc && \
     curl -#fSLo /tmp/npc/linux_amd64_client.tar.gz https://github.com/ehang-io/nps/releases/download/${NPS_VERSION}/linux_amd64_client.tar.gz && \
