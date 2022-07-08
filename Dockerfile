@@ -18,6 +18,8 @@ ENV YQ_VERSION="v4.25.2"
 
 ENV KIND_VERSION="v0.14.0"
 
+ENV KUBECM_VERSION="0.17.0"
+
 ENV HOST="code-server"
 
 COPY ./start.sh /opt/start.sh
@@ -27,24 +29,30 @@ COPY ./extensions /opt/extensions
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool mariadb-client upx openssh-server golang python3 python3-pip nodejs npm age rsync tree jq zip && \
+RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool mariadb-client upx openssh-server golang python3 python3-pip nodejs npm age rsync tree jq zip fzf && \
     # python 工具
     ln -sf /usr/bin/python3 /usr/bin/python && \
     pip3 install ydcv mycli && \
     # npm 工具
     npm install --global yarn tyarn commitizen git-cz && \
     # yq
-    curl -#fsSLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 && \
+    curl -#fSLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 && \
     # k8s 工具
-    curl -#fsSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    curl -#fSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
+    # kubectx kubens kubecm
+    git clone https://github.com/ahmetb/kubectx /opt/kubectx && \
+    ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx && \
+    ln -s /opt/kubectx/kubens /usr/local/bin/kubens && \
+    curl -#fSLo /tmp/kubecm.tar.gz https://github.com/sunny0826/kubecm/releases/download/v${KUBECM_VERSION}/kubecm_${KUBECM_VERSION}_Linux_x86_64.tar.gz && \
+    tar xzvf /tmp/kubecm.tar.gz -C /usr/local/bin kubecm && \
     # nps 客户端
     mkdir /tmp/npc && \
-    curl -#fsSLo /tmp/npc/linux_amd64_client.tar.gz https://github.com/ehang-io/nps/releases/download/${NPS_VERSION}/linux_amd64_client.tar.gz && \
+    curl -#fSLo /tmp/npc/linux_amd64_client.tar.gz https://github.com/ehang-io/nps/releases/download/${NPS_VERSION}/linux_amd64_client.tar.gz && \
     tar zxvf /tmp/npc/linux_amd64_client.tar.gz -C /tmp/npc && \
     /tmp/npc/npc install && \
     # clash 客户端
-    curl -#fsSLo /tmp/clash-linux-amd64.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-amd64-v1.10.0.gz && \
+    curl -#fSLo /tmp/clash-linux-amd64.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-amd64-v1.10.0.gz && \
     cat /tmp/clash-linux-amd64.gz | gzip -d > /usr/local/bin/clash && \
     # 安装 docker 客户端
     curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
@@ -55,11 +63,11 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     curl -#fSLo /tmp/dist_linux.tar.gz https://downloads.dockerslim.com/releases/${DOCKER_SLIM_VERSION}/dist_linux.tar.gz && \
     tar zxvf /tmp/dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/ && \
     # 安装 easyoc，easy openconnect
-    curl -#fsSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
+    curl -#fSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
     # 安装 helmfile 
-    curl -#fsSLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
+    curl -#fSLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
     # 安装 sops
-    curl -#fsSLo /usr/local/bin/sops https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 && \
+    curl -#fSLo /usr/local/bin/sops https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 && \
     # 时区
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone && \
     # 授权，清理
