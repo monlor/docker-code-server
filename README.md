@@ -23,6 +23,22 @@ commitizen init git-cz --save-dev --save-exact
 git cz
 ```
 
+### YouDao Translate
+
+add env: YDCV_YOUDAO_APPID YDCV_YOUDAO_APPSEC
+
+```bash
+ydcv hello
+```
+
+### Trash
+
+https://github.com/andreafrancia/trash-cli
+
+```bash
+trash-list
+```
+
 ## Custom
 
 ### Custom zshrc

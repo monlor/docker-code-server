@@ -64,6 +64,7 @@ alias upxx="upx --lzma --ultra-brute"
 alias cp="cp -i"
 alias rm="trash"
 alias k="kubectl"
+alias cat="batcat"
 
 # completion
 which helm &> /dev/null && source <(helm completion zsh)

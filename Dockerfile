@@ -91,4 +91,6 @@ USER coder
 # autojump
 RUN git clone https://github.com/joelthelion/autojump /tmp/autojump && \
     cd /tmp/autojump && SHELL=/bin/zsh ./install.py && cd - && rm -rf /tmp/autojump && \
-    cp -rf ~/.autojump /tmp/autojump
+    cp -rf ~/.autojump /tmp/autojump && \
+    # 添加回收站定时清理任务
+    echo "@daily $(which trash-empty) 30" | crontab -
