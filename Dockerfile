@@ -20,6 +20,8 @@ ENV KIND_VERSION="v0.14.0"
 
 ENV KUBECM_VERSION="0.17.0"
 
+ENV K9S_VERSION="v0.25.21"
+
 ENV VAULT_VERSION="1.11.0"
 
 ENV HOST="code-server"
@@ -45,7 +47,8 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     curl -#fSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     # k9s 
-    curl -sS https://webinstall.dev/k9s | bash && \
+    curl -#fSLo /tmp/k9s_Linux_x86_64.tar.gz https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_x86_64.tar.gz && \
+    tar zxvf k9s_Linux_x86_64.tar.gz -C /usr/local/bin k9s && \
     # kubectx kubens kubecm
     git clone https://github.com/ahmetb/kubectx /opt/kubectx && \
     ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx && \
