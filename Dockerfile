@@ -1,27 +1,29 @@
-FROM codercom/code-server:4.4.0
+# https://github.com/coder/code-server/releases
+FROM codercom/code-server:4.5.0
 
 LABEL author=monlor
 
+# https://github.com/ehang-io/nps/releases
 ENV NPS_VERSION="v0.26.10"
-
-ENV CLASH_VERSION="v1.10.0"
-
-ENV DOCKER_VERSION="20.10.14"
-
+# https://github.com/Dreamacro/clash/releases
+ENV CLASH_VERSION="v1.11.4"
+# https://download.docker.com/linux/static/stable/x86_64/
+ENV DOCKER_VERSION="20.10.17"
+# https://github.com/docker-slim/docker-slim/releases
 ENV DOCKER_SLIM_VERSION="1.37.6"
-
-ENV HELMFILE_VERSION="v0.144.0"
-
-ENV SOPS_VERSION="v3.7.2"
-
+# https://github.com/helmfile/helmfile/releases
+ENV HELMFILE_VERSION="v0.145.2"
+# https://github.com/mozilla/sops/releases
+ENV SOPS_VERSION="v3.7.3"
+# https://github.com/mikefarah/yq/releases
 ENV YQ_VERSION="v4.25.2"
-
+# https://github.com/kubernetes-sigs/kind/releases
 ENV KIND_VERSION="v0.14.0"
-
+# https://github.com/sunny0826/kubecm/releases
 ENV KUBECM_VERSION="0.17.0"
-
+# https://github.com/derailed/k9s/releases
 ENV K9S_VERSION="v0.25.21"
-
+# https://github.com/hashicorp/vault/releases
 ENV VAULT_VERSION="1.11.0"
 
 ENV HOST="code-server"
