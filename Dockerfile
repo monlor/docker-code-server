@@ -48,7 +48,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     # k9s 
     curl -#fSLo /tmp/k9s_Linux_x86_64.tar.gz https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_x86_64.tar.gz && \
-    tar zxvf k9s_Linux_x86_64.tar.gz -C /usr/local/bin k9s && \
+    tar zxvf /tmp/k9s_Linux_x86_64.tar.gz -C /usr/local/bin k9s && \
     # kubectx kubens kubecm
     git clone https://github.com/ahmetb/kubectx /opt/kubectx && \
     ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx && \
