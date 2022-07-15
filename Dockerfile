@@ -12,7 +12,7 @@ ENV DOCKER_VERSION="20.10.17"
 # https://github.com/docker-slim/docker-slim/releases
 ENV DOCKER_SLIM_VERSION="1.37.6"
 # https://github.com/helmfile/helmfile/releases
-ENV HELMFILE_VERSION="v0.145.2"
+ENV HELMFILE_VERSION="0.145.2"
 # https://github.com/mozilla/sops/releases
 ENV SOPS_VERSION="v3.7.3"
 # https://github.com/mikefarah/yq/releases
@@ -79,7 +79,8 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     # 安装 easyoc，easy openconnect
     curl -#fSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
     # 安装 helmfile 
-    curl -#fSLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
+    curl -#fSLo /tmp/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz && \
+    tar zxvf /tmp/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz -C /usr/local/bin helmfile && \
     # 安装 sops
     curl -#fSLo /usr/local/bin/sops https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 && \
     # 时区
