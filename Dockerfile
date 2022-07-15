@@ -20,6 +20,8 @@ ENV KIND_VERSION="v0.14.0"
 
 ENV KUBECM_VERSION="0.17.0"
 
+ENV VAULT_VERSION="1.11.0"
+
 ENV HOST="code-server"
 
 COPY ./start.sh /opt/start.sh
@@ -35,11 +37,15 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     pip3 install ydcv mycli && \
     # npm 工具
     npm install --global yarn tyarn commitizen git-cz && \
+    # tailscale
+    curl -fsSL https://tailscale.com/install.sh | sh && \
     # yq
     curl -#fSLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 && \
     # k8s 工具
     curl -#fSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
+    # k9s 
+    curl -sS https://webinstall.dev/k9s | bash && \
     # kubectx kubens kubecm
     git clone https://github.com/ahmetb/kubectx /opt/kubectx && \
     ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx && \
@@ -47,8 +53,8 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     curl -#fSLo /tmp/kubecm.tar.gz https://github.com/sunny0826/kubecm/releases/download/v${KUBECM_VERSION}/kubecm_${KUBECM_VERSION}_Linux_x86_64.tar.gz && \
     tar xzvf /tmp/kubecm.tar.gz -C /usr/local/bin kubecm && \
     # vault
-    curl -#fSLo /tmp/vault_1.11.0_linux_amd64.zip https://releases.hashicorp.com/vault/1.11.0/vault_1.11.0_linux_amd64.zip && \
-    unzip /tmp/vault_1.11.0_linux_amd64.zip -d /usr/local/bin && \
+    curl -#fSLo /tmp/vault_${VAULT_VERSION}_linux_amd64.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
+    unzip /tmp/vault_${VAULT_VERSION}_linux_amd64.zip -d /usr/local/bin && \
     # nps 客户端
     mkdir /tmp/npc && \
     curl -#fSLo /tmp/npc/linux_amd64_client.tar.gz https://github.com/ehang-io/nps/releases/download/${NPS_VERSION}/linux_amd64_client.tar.gz && \
