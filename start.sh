@@ -26,7 +26,7 @@ if [ -n "${CLASH_SUB_URL}" ]; then
     if [ ! -d "${HOME}/.config/clash" ]; then
         mkdir -p ${HOME}/.config/clash
     fi
-    curl -#Lo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL}
+    curl -#fSLo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL}
 fi
 
 if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
