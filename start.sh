@@ -69,6 +69,7 @@ alias cat="batcat"
 # completion
 which helm &> /dev/null && source <(helm completion zsh)
 which kubectl &> /dev/null && source <(kubectl completion zsh)
+which k9s &> /dev/null && source <(k9s completion zsh)
 
 # env
 export GO111MODULE=on
