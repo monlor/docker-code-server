@@ -66,7 +66,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     tar zxvf /tmp/npc/linux_amd64_client.tar.gz -C /tmp/npc && \
     /tmp/npc/npc install && \
     # clash 客户端
-    curl -#fSLo /tmp/clash-linux-amd64.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-amd64-v1.10.0.gz && \
+    curl -#fSLo /tmp/clash-linux-amd64.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-amd64-${CLASH_VERSION}.gz && \
     cat /tmp/clash-linux-amd64.gz | gzip -d > /usr/local/bin/clash && \
     # 安装 docker 客户端
     curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
