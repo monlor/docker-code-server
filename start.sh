@@ -54,7 +54,6 @@ export ZSH="\$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 source \$ZSH/oh-my-zsh.sh
-export PATH=\$HOME/golang/bin:\$HOME/.local/bin:\$PATH:/usr/sbin:/sbin
 
 # plugin
 [[ -s \${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source \${HOME}/.autojump/etc/profile.d/autojump.sh
@@ -76,6 +75,7 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=~/golang
 export GOROOT=/usr/local/go
+export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/sbin:/sbin
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
 # default editor
