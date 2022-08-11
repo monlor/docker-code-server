@@ -35,14 +35,14 @@ COPY ./extensions /opt/extensions
 USER root
 
 # 安装常用工具
-RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool mariadb-client upx openssh-server python3 python3-pip nodejs npm age rsync tree jq zip fzf snapd && \
-    # snap 软件
-    snap install --classic go && \
+RUN apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool mariadb-client upx openssh-server python3 python3-pip nodejs npm age rsync tree jq zip fzf && \
     # python 工具
     ln -sf /usr/bin/python3 /usr/bin/python && \
     pip3 install ydcv mycli && \
     # npm 工具
     npm install --global yarn tyarn commitizen git-cz && \
+    # golang
+    curl -LO https://get.golang.org/$(uname)/go_installer && chmod +x go_installer && ./go_installer && rm go_installer && \
     # tailscale
     curl -fsSL https://tailscale.com/install.sh | sh && \
     # yq
