@@ -26,6 +26,8 @@ ENV K9S_VERSION="v0.25.21"
 # https://github.com/hashicorp/vault/releases
 ENV VAULT_VERSION="1.11.0"
 
+ENV GOLANG_VERSION="1.18.3"
+
 ENV HOST="code-server"
 
 COPY ./start.sh /opt/start.sh
@@ -41,12 +43,14 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
     pip3 install ydcv mycli && \
     # npm 工具
     npm install --global yarn tyarn commitizen git-cz && \
-    # golang
-    curl -LO https://get.golang.org/$(uname)/go_installer && chmod +x go_installer && ./go_installer && rm go_installer && \
     # tailscale
     curl -fsSL https://tailscale.com/install.sh | sh && \
     # yq
     curl -#fSLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 && \
+    # golang
+    curl -#fSLo /tmp/go${GOLANG_VERSION}.linux-amd64.tar.gz https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz && \
+    tar zxvf /tmp/go${GOLANG_VERSION}.linux-amd64.tar.gz -C /usr/local && \
+    rm -rf /tmp/go${GOLANG_VERSION}.linux-amd64.tar.gz && \
     # k8s 工具
     curl -#fSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
