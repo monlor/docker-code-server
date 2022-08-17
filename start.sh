@@ -74,7 +74,6 @@ which k9s &> /dev/null && source <(k9s completion zsh)
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPATH=~/golang
-export GOROOT=/usr/local/go
 export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/sbin:/sbin
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
