@@ -53,7 +53,7 @@ RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vi
   mkdir -p /etc/fixuid && \
   printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml && \
   # chmod
-  chmod +x /usr/bin/entrypoint.sh /opt/start.sh && \
+  chmod +x /usr/bin/entrypoint.sh /opt/start.sh /usr/local/bin/* && \
   # 清理缓存
   pacman --noconfirm -Scc 
 
