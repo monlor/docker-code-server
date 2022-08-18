@@ -40,28 +40,11 @@ cat > ${HOME}/.zshrc <<-EOF
 ZSH=/usr/share/oh-my-zsh/
 ZSH_THEME="robbyrussell"
 plugins=(git)
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_CACHE_DIR=\$HOME/.cache/oh-my-zsh
 if [[ ! -d \$ZSH_CACHE_DIR ]]; then
   mkdir \$ZSH_CACHE_DIR
 fi
 source \$ZSH/oh-my-zsh.sh
-
-# plugin
-[[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
-
-# alias
-alias upxx="upx --lzma --ultra-brute"
-alias cp="cp -i"
-alias rm="trash"
-alias k="kubectl"
-alias cat="bat"
-
-# completion
-which helm &> /dev/null && source <(helm completion zsh)
-which kubectl &> /dev/null && source <(kubectl completion zsh)
-which k9s &> /dev/null && source <(k9s completion zsh)
 
 # env
 export GO111MODULE=on
@@ -82,6 +65,23 @@ export DOCKER_TLS_VERIFY=1
 # ydcv
 export YDCV_YOUDAO_APPID=${YDCV_YOUDAO_APPID}
 export YDCV_YOUDAO_APPSEC=${YDCV_YOUDAO_APPSEC}
+
+# alias
+alias upxx="upx --lzma --ultra-brute"
+alias cp="cp -i"
+alias rm="trash"
+alias k="kubectl"
+alias cat="bat"
+
+# plugin
+[[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# completion
+which helm &> /dev/null && source <(helm completion zsh)
+which kubectl &> /dev/null && source <(kubectl completion zsh)
+which k9s &> /dev/null && source <(k9s completion zsh)
 
 setproxy() {
     sudo kill -15 `pidof clash` &> /dev/null

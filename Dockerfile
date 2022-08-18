@@ -8,7 +8,7 @@ VOLUME [ "/home/coder" ]
 
 ENV HOST="code-server"
 
-ENV PACMAN_PKG="bat trash-cli openconnect oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale yq kubectl helm helmfile k9s kubectx vault clash sops autojump upx neofetch"
+ENV PACMAN_PKG="bat trash-cli openconnect oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale yq kubectl helm helmfile k9s kubectx vault clash sops autojump upx neofetch ttf-jetbrains-mono"
 
 ENV AUR_PKG="kubecm-git kind docker-slim"
 
