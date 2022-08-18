@@ -6,7 +6,7 @@
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
 # 启动定时任务
-sudo /usr/sbin/cron
+sudo /usr/sbin/crond
 
 # 配置启动 openssh server
 echo "n" | ssh-keygen -q -t rsa -b 2048 -f /home/coder/.ssh/ssh_host_rsa_key -N "" || true
@@ -29,41 +29,32 @@ if [ -n "${CLASH_SUB_URL}" ]; then
     curl -#fSLo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL}
 fi
 
-if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
-    echo "安装 oh-my-zsh ..."
-    rm -rf ${HOME}/.oh-my-zsh
-    # 安装 oh-my-zsh
-    echo 'y' | sh -c "$(curl -fsSL https://github.do/https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
-
-# 安装 zsh 插件
-if [ ! -d ${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting ${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-fi
-if [ ! -d ${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-fi
-if [ ! -d ${HOME}/.autojump ]; then
-    cp -rf /tmp/autojump ${HOME}/.autojump
+# zsh
+if [ ! -f ~/.zshrc ]; then
+    cp -rf /usr/share/oh-my-zsh/zshrc ~/.zshrc
 fi
 
 # 自定义环境变量
 cat > ${HOME}/.zshrc <<-EOF
 # oh-my-zsh
-export ZSH="\$HOME/.oh-my-zsh"
+ZSH=/usr/share/oh-my-zsh/
 ZSH_THEME="robbyrussell"
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+ZSH_CACHE_DIR=\$HOME/.cache/oh-my-zsh
+if [[ ! -d \$ZSH_CACHE_DIR ]]; then
+  mkdir \$ZSH_CACHE_DIR
+fi
 source \$ZSH/oh-my-zsh.sh
 
 # plugin
-[[ -s \${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source \${HOME}/.autojump/etc/profile.d/autojump.sh
+[[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
 
 # alias
 alias upxx="upx --lzma --ultra-brute"
 alias cp="cp -i"
 alias rm="trash"
 alias k="kubectl"
-alias cat="batcat"
+alias cat="bat"
 
 # completion
 which helm &> /dev/null && source <(helm completion zsh)
