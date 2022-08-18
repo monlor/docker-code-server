@@ -8,7 +8,7 @@ VOLUME [ "/home/coder" ]
 
 ENV HOST="code-server"
 
-ENV PACMAN_PKG="bat trash-cli oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale yq kubectl helm helmfile k9s kubectx vault clash sops autojump upx"
+ENV PACMAN_PKG="bat trash-cli oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale yq kubectl helm helmfile k9s kubectx vault clash sops autojump upx neofetch"
 
 ENV AUR_PKG="kubecm-git kind docker-slim"
 
@@ -66,6 +66,8 @@ ENV USER=coder
 RUN yay -S --save --noconfirm code-server nps ${AUR_PKG} && \
   # fix
   cp -rf /usr/share/oh-my-zsh/zshrc ~/.zshrc && \
+  # 添加回收站定时清理任务
+  echo "@daily $(which trash-empty) 30" | crontab - && \
   # 清理缓存
   yay --noconfirm -Scc && \
   rm -rf ~/.cache/* 

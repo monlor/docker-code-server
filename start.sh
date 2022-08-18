@@ -65,9 +65,9 @@ which k9s &> /dev/null && source <(k9s completion zsh)
 
 # env
 export GO111MODULE=on
-export GOPROXY=https://goproxy.cn
+export GOPROXY=https:/ /goproxy.cn
 export GOPATH=~/golang
-export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/sbin:/sbin
+export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/local/bin
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
 # default editor
