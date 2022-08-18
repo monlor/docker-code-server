@@ -84,14 +84,14 @@ export YDCV_YOUDAO_APPID=${YDCV_YOUDAO_APPID}
 export YDCV_YOUDAO_APPSEC=${YDCV_YOUDAO_APPSEC}
 
 setproxy() {
-    sudo killall clash &> /dev/null
-    /usr/local/bin/clash &> /dev/null &
+    sudo kill -15 `pidof clash` &> /dev/null
+    clash &> /dev/null &
     export http_proxy=127.0.0.1:7890
     export https_proxy=127.0.0.1:7890
 }
 
 unsetproxy() {
-    sudo killall clash
+    sudo kill -15 `pidof clash` &> /dev/null
     unset http_proxy
     unset https_proxy
 }
