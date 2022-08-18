@@ -6,7 +6,7 @@
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
 # 启动定时任务
-sudo /usr/sbin/crond
+sudo dumb-init /usr/sbin/crond
 
 # 配置启动 openssh server
 echo "n" | ssh-keygen -q -t rsa -b 2048 -f /home/coder/.ssh/ssh_host_rsa_key -N "" || true
@@ -39,7 +39,9 @@ cat > ${HOME}/.zshrc <<-EOF
 # oh-my-zsh
 ZSH=/usr/share/oh-my-zsh/
 ZSH_THEME="robbyrussell"
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git)
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_CACHE_DIR=\$HOME/.cache/oh-my-zsh
 if [[ ! -d \$ZSH_CACHE_DIR ]]; then
   mkdir \$ZSH_CACHE_DIR
@@ -71,6 +73,8 @@ export HIST_STAMPS="yyyy-mm-dd"
 # default editor
 export VISUAL=vim
 export EDITOR="\$VISUAL"
+# bat
+export BAT_THEME="GitHub"
 # docker in docker
 export DOCKER_HOST=tcp://${DOCKER_DIND_HOST:-docker}:2376
 export DOCKER_CERT_PATH=${DOCKER_DIND_CERT_PATH:-"/certs/client"}

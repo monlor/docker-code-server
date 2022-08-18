@@ -8,7 +8,7 @@ VOLUME [ "/home/coder" ]
 
 ENV HOST="code-server"
 
-ENV PACMAN_PKG="bat trash-cli oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale yq kubectl helm helmfile k9s kubectx vault clash sops autojump"
+ENV PACMAN_PKG="bat trash-cli oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale yq kubectl helm helmfile k9s kubectx vault clash sops autojump upx"
 
 ENV AUR_PKG="kubecm-git kind docker-slim"
 
@@ -16,7 +16,6 @@ ENV AUR_PKG="kubecm-git kind docker-slim"
 ENV DOCKER_VERSION="20.10.17"
 # https://github.com/docker-slim/docker-slim/releases
 ENV DOCKER_SLIM_VERSION="1.37.6"
-ENV CODE_SERVER_VERSION="4.5.2"
 
 # Allow users to have scripts run on container startup to prepare workspace.
 # https://github.com/coder/code-server/issues/5177
@@ -29,10 +28,6 @@ COPY ./extensions /opt/extensions
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting npm openssh ${PACMAN_PKG} && \
-  # 安装 coder-server
-  # curl -fL https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz | tar -C /usr/local/lib -xz && \
-  # mv /usr/local/lib/code-server-${CODE_SERVER_VERSION}-linux-amd64 /usr/local/lib/code-server && \
-  # ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server && \
   # npm 工具
   npm install --global yarn tyarn commitizen git-cz && \
   # 安装 docker 客户端
