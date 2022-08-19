@@ -72,6 +72,7 @@ alias cp="cp -i"
 alias rm="trash"
 alias k="kubectl"
 alias cat="bat"
+alias ping="sudo ping"
 
 # plugin
 [[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
