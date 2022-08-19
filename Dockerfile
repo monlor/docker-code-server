@@ -12,7 +12,7 @@ ENV PACMAN_PKG="bat trash-cli openconnect oath-toolkit mariadb-clients python3 n
 
 ENV AUR_PKG="kubecm-git kind docker-slim"
 
-ENV NPM_PKG="wrangler"
+ENV NPM_PKG="wrangler hexo"
 
 # https://download.docker.com/linux/static/stable/x86_64/
 ENV DOCKER_VERSION="20.10.17"
