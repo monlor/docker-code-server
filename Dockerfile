@@ -72,7 +72,7 @@ RUN yay -S --save --noconfirm code-server nps ${AUR_PKG} && \
   echo "@daily $(which trash-empty) 30" | crontab - && \
   # 清理缓存
   yay --noconfirm -Scc && \
-  rm -rf ~/.cache/* 
+  rm -rf ~/.cache/* ~/go
 
 WORKDIR /home/coder
 
