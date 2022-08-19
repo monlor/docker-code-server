@@ -21,6 +21,7 @@ services:
     ports:
     # ssh port for vscode remote ssh
     - 1022:22/tcp
+    - 8080:8080/tcp
     restart: unless-stopped
     networks:
     - general

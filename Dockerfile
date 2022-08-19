@@ -2,7 +2,7 @@ FROM monlor/archlinux-base:main
 
 LABEL MAINTAINER="me@monlor.com"
 
-EXPOSE 8080
+EXPOSE 8080 22
 
 VOLUME [ "/home/coder" ]
 
@@ -73,5 +73,7 @@ RUN yay -S --save --noconfirm code-server nps ${AUR_PKG} && \
   # 清理缓存
   yay --noconfirm -Scc && \
   rm -rf ~/.cache/* 
+
+WORKDIR /home/coder
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "."]
