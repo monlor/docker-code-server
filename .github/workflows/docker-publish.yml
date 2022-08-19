@@ -15,6 +15,10 @@ on:
   # pull_request:
   #   branches: [ main ]
 
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
@@ -23,12 +27,6 @@ env:
 
 
 jobs:
-  cancel:
-    name: auto-cancellation-running-action
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fauguste/auto-cancellation-running-action@0.1.4
-
   build:
     runs-on: ubuntu-latest
     permissions:
