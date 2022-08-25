@@ -5,6 +5,27 @@
 # ydcv环境变量：YDCV_YOUDAO_APPID YDCV_YOUDAO_APPSEC
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
+# 挂载 juicefs 目录
+# 挂载 juicefs 目录
+if [ -n "${META_PASSWORD}" -a -n "${META_URL}" ]; then
+    cd /tmp
+    JUICEFS_CACHE_DIR=${JUICEFS_CACHE_DIR:-/tmp/cache/juicefs}
+    JUICEFS_MOUNT_DIR=${JUICEFS_MOUNT_DIR:-/workspace}
+    JUICEFS_OPEN_CACHE=${JUICEFS_OPEN_CACHE:-3600}
+    echo "挂载 juicefs 目录到 ${JUICEFS_MOUNT_DIR}"
+    sudo -i <<-EOF
+    export META_PASSWORD=${META_PASSWORD}
+    if [ ! -d "${JUICEFS_CACHE_DIR}" ]; then
+        mkdir -p "${JUICEFS_CACHE_DIR}"
+    fi
+    juicefs mount -d ${META_URL} --cache-dir ${JUICEFS_CACHE_DIR} --log ${JUICEFS_CACHE_DIR}/juicefs.log --writeback --open-cache ${JUICEFS_OPEN_CACHE} ${JUICEFS_MOUNT_DIR}
+EOF
+    if [ ! -f ${HOME} ]; then
+        mkdir -p ${HOME}
+    fi
+    cd ${HOME}
+fi
+
 # 启动定时任务
 sudo dumb-init /usr/sbin/crond
 
@@ -49,7 +70,7 @@ source \$ZSH/oh-my-zsh.sh
 # env
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
-export GOPATH=~/golang
+export GOPATH=/workspace/golang
 export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/local/bin
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
@@ -99,4 +120,5 @@ unsetproxy() {
 
 # load user zshrc
 [ -f ${HOME}/.zshrc.user ] && source ${HOME}/.zshrc.user
+[ -f /workspace/.zshrc.user ] && source /workspace/.zshrc.user
 EOF
