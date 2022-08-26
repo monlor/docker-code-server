@@ -10,7 +10,7 @@ ENV HOST="code-server"
 
 ENV PACMAN_PKG="bat trash-cli openconnect oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale go-yq kubectl helm helmfile k9s kubectx vault clash sops autojump upx neofetch ttf-jetbrains-mono"
 
-ENV AUR_PKG="kubecm-git kind docker-slim lsyncd"
+ENV AUR_PKG="kubecm-git kind docker-slim mirror-sync"
 
 ENV NPM_PKG="wrangler hexo"
 

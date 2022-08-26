@@ -5,51 +5,13 @@
 # ydcv环境变量：YDCV_YOUDAO_APPID YDCV_YOUDAO_APPSEC
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
-# 自动同步工作目录
-if [ -n "${LSYNCD_TARGET}" ]; then
+# 自动同步工作目录，通过ssh连接，需要提前配置密钥访问目标服务器
+# MIRROR_SYNC_HOST: root@1.2.3.4
+if [ -n "${MIRROR_SYNC_HOST}" ]; then
 
-    echo "启动 lsyncd 同步任务，目标服务器：${LSYNCD_TARGET} ..."
-
-    lsyncd_exclude=""
-    if [ -n "${LSYNC_EXCLUDE}" ]; then
-        lsyncd_exclude=`echo ${LSYNC_EXCLUDE} | sed -e 's/,/","/g' -e 's/^/"/' -e 's/$/"/'`
-    fi
-
-    cat > ${HOME}/.lsyncd.conf <<-EOF
-settings {
-    logfile ="/var/log/lsyncd.log",
-    statusFile ="/var/run/lsyncd.status",
-    inotifyMode = "CloseWrite",
-    maxProcesses = 8,
-    }
- 
-sync {
-    default.rsync,
-    source = "${LSYNCD_SOURCE:-/workspace}",
-    target = "${LSYNCD_TARGET}",
-    delete = "${LSYNCD_DELETE:-running}",
-    exclude = { ${lsyncd_exclude} },
-    delay = ${LSYNCD_DELAY:-60},
-    init = false,
-    rsync = {
-        binary = "/bin/rsync",
-        archive = true,
-        compress = true,
-        verbose = true,
-        password_file = "${HOME}/.rsync.password",
-        _extra = { "--bwlimit=200" }
-        }
-    }
-EOF
-
-    if [ -n "${LSYNCD_TARGET_PASSWORD}" ]; then
-        echo "${LSYNCD_TARGET_PASSWORD}" > ${HOME}/.rsync.password
-        chmod 600 ${HOME}/.rsync.password
-    fi
-
-    lsyncd ${HOME}/.lsyncd.conf
-
-    alias rsyncsh="rsync -av --delete ${LSYNCD_SOURCE} ${LSYNCD_TARGET} --password-file=${HOME}/.rsync.password"
+    echo "启动 mirror 同步任务，目标服务器：${MIRROR_SYNC_HOST} ..."
+    ssh -4 -fNL 49172:localhost:49172 ${MIRROR_SYNC_HOST}
+    dumb-init mirror client --local-root /workspace --remote-root /data --host 127.0.0.1 --enable-log-file -lp /tmp --include '*' --exclude 'node_modules' &
 
 fi
 
