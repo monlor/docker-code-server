@@ -12,13 +12,6 @@ deploy with docker compose
 
 [Deploy Code Server + Docker DinD](docker-compose-with-docker.yaml)
 
-## 工作目录
-
-默认目录为`/home/coder`，建议持久化这个目录
-支持juiceFS分布式文件系统，配置以下变量启用，将会自动挂载到`/home/coder`目录
-* META_URL 元数据引擎 redis/mysql 连接地址
-* META_PASSWORD 元数据引擎连接密码
-
 ## Tools
 
 ### git cz

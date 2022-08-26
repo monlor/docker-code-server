@@ -10,7 +10,7 @@ ENV HOST="code-server"
 
 ENV PACMAN_PKG="bat trash-cli openconnect oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale go-yq kubectl helm helmfile k9s kubectx vault clash sops autojump upx neofetch ttf-jetbrains-mono"
 
-ENV AUR_PKG="kubecm-git kind docker-slim"
+ENV AUR_PKG="kubecm-git kind docker-slim lsyncd"
 
 ENV NPM_PKG="wrangler hexo"
 
@@ -29,7 +29,7 @@ COPY ./extensions /opt/extensions
 
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 
-RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting npm openssh fuse2 juicefs-oss ${PACMAN_PKG} && \
+RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting npm openssh ${PACMAN_PKG} && \
   # npm 工具
   npm install --global yarn tyarn commitizen git-cz ${NPM_PKG} && \
   # 安装 docker 客户端

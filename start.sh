@@ -5,25 +5,52 @@
 # ydcv环境变量：YDCV_YOUDAO_APPID YDCV_YOUDAO_APPSEC
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
-# 挂载 juicefs 目录
-# 挂载 juicefs 目录
-if [ -n "${META_PASSWORD}" -a -n "${META_URL}" ]; then
-    cd /tmp
-    JUICEFS_CACHE_DIR=${JUICEFS_CACHE_DIR:-/tmp/cache/juicefs}
-    JUICEFS_MOUNT_DIR=${JUICEFS_MOUNT_DIR:-/workspace}
-    JUICEFS_OPEN_CACHE=${JUICEFS_OPEN_CACHE:-3600}
-    echo "挂载 juicefs 目录到 ${JUICEFS_MOUNT_DIR}"
-    sudo -i <<-EOF
-    export META_PASSWORD=${META_PASSWORD}
-    if [ ! -d "${JUICEFS_CACHE_DIR}" ]; then
-        mkdir -p "${JUICEFS_CACHE_DIR}"
+# 自动同步工作目录
+if [ -n "${LSYNCD_TARGET}" ]; then
+
+    echo "启动 lsyncd 同步任务，目标服务器：${LSYNCD_TARGET} ..."
+
+    lsyncd_exclude=""
+    if [ -n "${LSYNC_EXCLUDE}" ]; then
+        lsyncd_exclude=`echo ${LSYNC_EXCLUDE} | sed -e 's/,/","/g' -e 's/^/"/' -e 's/$/"/'`
     fi
-    juicefs mount -d ${META_URL} --cache-dir ${JUICEFS_CACHE_DIR} --log ${JUICEFS_CACHE_DIR}/juicefs.log --writeback --open-cache ${JUICEFS_OPEN_CACHE} ${JUICEFS_MOUNT_DIR}
+
+    cat > ${HOME}/.lsyncd.conf <<-EOF
+settings {
+    logfile ="/var/log/lsyncd.log",
+    statusFile ="/var/run/lsyncd.status",
+    inotifyMode = "CloseWrite",
+    maxProcesses = 8,
+    }
+ 
+sync {
+    default.rsync,
+    source = "${LSYNCD_SOURCE:-/workspace}",
+    target = "${LSYNCD_TARGET}",
+    delete = "${LSYNCD_DELETE:-running}",
+    exclude = { ${lsyncd_exclude} },
+    delay = ${LSYNCD_DELAY:-60},
+    init = false,
+    rsync = {
+        binary = "/bin/rsync",
+        archive = true,
+        compress = true,
+        verbose = true,
+        password_file = "${HOME}/.rsync.password",
+        _extra = { "--bwlimit=200" }
+        }
+    }
 EOF
-    if [ ! -f ${HOME} ]; then
-        mkdir -p ${HOME}
+
+    if [ -n "${LSYNCD_TARGET_PASSWORD}" ]; then
+        echo "${LSYNCD_TARGET_PASSWORD}" > ${HOME}/.rsync.password
+        chmod 600 ${HOME}/.rsync.password
     fi
-    cd ${HOME}
+
+    lsyncd ${HOME}/.lsyncd.conf
+
+    alias rsyncsh="rsync -av --delete ${LSYNCD_SOURCE} ${LSYNCD_TARGET} --password-file=${HOME}/.rsync.password"
+
 fi
 
 # 启动定时任务
@@ -70,7 +97,7 @@ source \$ZSH/oh-my-zsh.sh
 # env
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
-export GOPATH=/workspace/golang
+export GOPATH=\${HOME}/golang
 export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/local/bin
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
