@@ -7,12 +7,7 @@ EXPOSE 8080 22
 VOLUME [ "/home/coder", "/workspace" ]
 
 ENV HOST="code-server"
-
-ENV PACMAN_PKG="bat trash-cli openconnect oath-toolkit mariadb-clients python3 nodejs age rsync tree jq zip fzf go mycli ydcv tailscale go-yq kubectl helm helmfile k9s kubectx vault clash sops autojump upx neofetch ttf-jetbrains-mono"
-
-ENV AUR_PKG="kubecm-git kind docker-slim"
-
-ENV NPM_PKG="wrangler hexo"
+ENV USER=coder
 
 # https://download.docker.com/linux/static/stable/x86_64/
 ENV DOCKER_VERSION="20.10.17"
@@ -23,15 +18,10 @@ ENV DOCKER_SLIM_VERSION="1.37.6"
 # https://github.com/coder/code-server/issues/5177
 ENV ENTRYPOINTD=${HOME}/entrypoint.d
 
-COPY ./start.sh /opt/start.sh
-
-COPY ./extensions /opt/extensions
-
-COPY ./entrypoint.sh /usr/bin/entrypoint.sh
-
-RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting npm openssh ${PACMAN_PKG} && \
+# 安装root必须程序
+RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting npm openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip autojump upx neofetch ttf-jetbrains-mono rsync && \
   # npm 工具
-  npm install --global yarn tyarn commitizen git-cz ${NPM_PKG} && \
+  npm install --global yarn tyarn commitizen git-cz && \
   # 安装 docker 客户端
   curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
   tar xzvf /tmp/docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
@@ -54,27 +44,46 @@ RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vi
   chown root:root /usr/local/bin/fixuid && \
   chmod 4755 /usr/local/bin/fixuid && \
   mkdir -p /etc/fixuid && \
-  printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml && \
-  # chmod
-  chmod +x /usr/bin/entrypoint.sh /opt/start.sh /usr/local/bin/* && \
+  printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml
+
+# 安装coder必须操作
+USER coder 
+
+RUN yay -S --save --noconfirm code-server nps && \
+  # fix
+  cp -rf /usr/share/oh-my-zsh/zshrc ~/.zshrc && \
+  # 添加回收站定时清理任务
+  echo "@daily $(which trash-empty) 30" | crontab - 
+
+# 下面是可能经常修改会影响缓存的部分，放在最后
+
+ENV AUR_PKG="kubecm-git kind docker-slim"
+
+RUN yay -S --save --noconfirm ${AUR_PKG} && \
+  # 清理缓存
+  yay --noconfirm -Scc && \
+  sudo rm -rf ~/.cache/* ~/go
+
+USER root
+
+ENV PACMAN_PKG="python3 nodejs age fzf go mariadb-clients mycli ydcv tailscale kubectl helm helmfile k9s kubectx vault clash sops"
+
+ENV NPM_PKG="wrangler hexo"
+
+RUN pacman -S --needed --noconfirm ${PACMAN_PKG} && \
+  # npm 工具
+  npm install --global ${NPM_PKG} && \
   # 清理缓存
   pacman --noconfirm -Scc && \
   rm -rf /tmp/cache
 
-# This way, if someone sets $DOCKER_USER, docker-exec will still work as
-# the uid will remain the same. note: only relevant if -u isn't passed to
-# docker-run.
-USER coder
-ENV USER=coder
+COPY ./start.sh /opt/start.sh
 
-RUN yay -S --save --noconfirm code-server nps ${AUR_PKG} && \
-  # fix
-  cp -rf /usr/share/oh-my-zsh/zshrc ~/.zshrc && \
-  # 添加回收站定时清理任务
-  echo "@daily $(which trash-empty) 30" | crontab - && \
-  # 清理缓存
-  yay --noconfirm -Scc && \
-  sudo rm -rf ~/.cache/* ~/go
+COPY ./extensions /opt/extensions
+
+COPY ./entrypoint.sh /usr/bin/entrypoint.sh
+
+RUN chmod +x /usr/bin/entrypoint.sh /opt/start.sh /usr/local/bin/*
 
 WORKDIR /workspace
 
