@@ -5,16 +5,6 @@
 # ydcv环境变量：YDCV_YOUDAO_APPID YDCV_YOUDAO_APPSEC
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
-# 自动同步工作目录，通过ssh连接，需要提前配置密钥访问目标服务器
-# MIRROR_SYNC_HOST: root@1.2.3.4
-if [ -n "${MIRROR_SYNC_HOST}" ]; then
-
-    echo "启动 mirror 同步任务，目标服务器：${MIRROR_SYNC_HOST} ..."
-    ssh -4 -fNL 49172:localhost:49172 ${MIRROR_SYNC_HOST}
-    dumb-init mirror client --local-root /workspace --remote-root /data --host 127.0.0.1 --enable-log-file -lp /tmp --include '*' --exclude 'node_modules' &
-
-fi
-
 # 启动定时任务
 sudo dumb-init /usr/sbin/crond
 
