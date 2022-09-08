@@ -6,9 +6,11 @@
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
 # 启动 resilio sync
+echo "启动同步工具 Resilio Sync ..."
 dumb-init rslsync --webui.listen 0.0.0.0:8888
 
 # 启动定时任务
+echo "启动定时任务守护程序 ..."
 sudo dumb-init /usr/sbin/crond
 
 # 配置启动 openssh server
@@ -19,13 +21,13 @@ sudo dumb-init /usr/sbin/sshd -D &
 
 # 启动 npc
 if [ -n "${NPS_SERVER}" -a -n "${NPS_KEY}" ]; then
-    echo "配置 nps..."
+    echo "启动内网穿透 npc ..."
     nohup npc -server=${NPS_SERVER} -vkey=${NPS_KEY} -type=${NPS_TYPE:-tcp} &
 fi
 
 # 启动 clash
 if [ -n "${CLASH_SUB_URL}" ]; then
-    echo "配置 clash..."
+    echo "配置 clash ..."
     if [ ! -d "${HOME}/.config/clash" ]; then
         mkdir -p ${HOME}/.config/clash
     fi
@@ -38,6 +40,7 @@ if [ ! -f ~/.zshrc ]; then
 fi
 
 # 自定义环境变量
+echo "写入 zsh 环境变量配置 ..."
 cat > ${HOME}/.zshrc <<-EOF
 # oh-my-zsh
 ZSH=/usr/share/oh-my-zsh/
