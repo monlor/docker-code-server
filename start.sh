@@ -7,7 +7,7 @@
 
 # 启动 resilio sync
 echo "启动同步工具 Resilio Sync ..."
-dumb-init rslsync --webui.listen 0.0.0.0:8888
+dumb-init rslsync --webui.listen 0.0.0.0:8888 --storage ~/.local/share/rslsync
 
 # 启动定时任务
 echo "启动定时任务守护程序 ..."
