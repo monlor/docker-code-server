@@ -5,6 +5,9 @@
 # ydcv环境变量：YDCV_YOUDAO_APPID YDCV_YOUDAO_APPSEC
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
+# 启动 resilio sync
+dumb-init rslsync --webui.listen 0.0.0.0:8888
+
 # 启动定时任务
 sudo dumb-init /usr/sbin/crond
 

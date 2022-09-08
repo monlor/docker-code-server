@@ -19,7 +19,7 @@ ENV DOCKER_SLIM_VERSION="1.37.6"
 ENV ENTRYPOINTD=${HOME}/entrypoint.d
 
 # 安装root必须程序
-RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting npm openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip autojump upx neofetch ttf-jetbrains-mono rsync && \
+RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting npm openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip autojump upx neofetch ttf-jetbrains-mono rsync rslsync clash && \
   # npm 工具
   npm install --global yarn tyarn commitizen git-cz && \
   # 安装 docker 客户端
@@ -66,7 +66,7 @@ RUN yay -S --save --noconfirm ${AUR_PKG} && \
 
 USER root
 
-ENV PACMAN_PKG="python3 nodejs age fzf go mariadb-clients mycli ydcv tailscale kubectl helm helmfile k9s kubectx vault clash sops"
+ENV PACMAN_PKG="python3 nodejs age fzf go mariadb-clients mycli ydcv tailscale kubectl helm helmfile k9s kubectx vault sops"
 
 ENV NPM_PKG="wrangler hexo"
 
