@@ -9,27 +9,14 @@ VOLUME [ "/home/coder", "/workspace" ]
 ENV HOST="code-server"
 ENV USER=coder
 
-# https://download.docker.com/linux/static/stable/x86_64/
-ENV DOCKER_VERSION="20.10.17"
-# https://github.com/docker-slim/docker-slim/releases
-ENV DOCKER_SLIM_VERSION="1.37.6"
-
 # Allow users to have scripts run on container startup to prepare workspace.
 # https://github.com/coder/code-server/issues/5177
 ENV ENTRYPOINTD=${HOME}/entrypoint.d
 
 # 安装root必须程序
-RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting npm openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip autojump upx neofetch ttf-jetbrains-mono rsync rslsync clash && \
+RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip autojump upx neofetch ttf-jetbrains-mono rsync rslsync clash python3 nodejs npm go mariadb-clients mycli ydcv && \
   # npm 工具
   npm install --global yarn tyarn commitizen git-cz && \
-  # 安装 docker 客户端
-  curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
-  tar xzvf /tmp/docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
-  # 安装 docker-slim 客户端
-  curl -#fSLo /tmp/dist_linux.tar.gz https://downloads.dockerslim.com/releases/${DOCKER_SLIM_VERSION}/dist_linux.tar.gz && \
-  tar zxvf /tmp/dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/ && \
-  # 安装 easyoc，easy openconnect
-  curl -#fSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
   # 配置 openssh，这里需要固化 ssh server 的密钥
   mkdir -p /var/run/sshd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
   echo 'HostKey /home/coder/.ssh/ssh_host_rsa_key' >> /etc/ssh/sshd_config && \
@@ -66,13 +53,26 @@ RUN yay -S --save --noconfirm ${AUR_PKG} && \
 
 USER root
 
-ENV PACMAN_PKG="python3 nodejs age fzf go mariadb-clients mycli ydcv tailscale kubectl helm helmfile k9s kubectx vault sops"
+ENV PACMAN_PKG="age fzf tailscale kubectl helm helmfile k9s kubectx vault sops"
 
 ENV NPM_PKG="wrangler hexo"
+
+# https://download.docker.com/linux/static/stable/x86_64/
+ENV DOCKER_VERSION="20.10.17"
+# https://github.com/docker-slim/docker-slim/releases
+ENV DOCKER_SLIM_VERSION="1.37.6"
 
 RUN pacman -S --needed --noconfirm ${PACMAN_PKG} && \
   # npm 工具
   npm install --global ${NPM_PKG} && \
+  # 安装 docker 客户端
+  curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
+  tar xzvf /tmp/docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
+  # 安装 docker-slim 客户端
+  curl -#fSLo /tmp/dist_linux.tar.gz https://downloads.dockerslim.com/releases/${DOCKER_SLIM_VERSION}/dist_linux.tar.gz && \
+  tar zxvf /tmp/dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/ && \
+  # 安装 easyoc，easy openconnect
+  curl -#fSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
   # 清理缓存
   pacman --noconfirm -Scc && \
   rm -rf /tmp/cache
@@ -84,6 +84,8 @@ COPY ./extensions /opt/extensions
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN chmod +x /usr/bin/entrypoint.sh /opt/start.sh /usr/local/bin/*
+
+USER coder 
 
 WORKDIR /workspace
 
