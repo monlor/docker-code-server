@@ -47,6 +47,9 @@ RUN yay -S --save --noconfirm code-server nps && \
 ENV AUR_PKG="kubecm-git kind docker-slim"
 
 RUN yay -S --save --noconfirm ${AUR_PKG} && \
+  # helm plugin 
+  helm plugin install https://github.com/databus23/helm-diff && \
+  helm plugin install https://github.com/jkroepke/helm-secrets && \
   # 清理缓存
   yay --noconfirm -Scc && \
   sudo rm -rf ~/.cache/* ~/go
