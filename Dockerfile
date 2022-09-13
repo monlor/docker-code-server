@@ -56,7 +56,7 @@ RUN yay -S --save --noconfirm ${AUR_PKG} && \
 
 USER root
 
-ENV PACMAN_PKG="age fzf tailscale kubectl helm helmfile k9s kubectx vault sops"
+ENV PACMAN_PKG="age fzf tailscale kubectl-bin helm helmfile k9s kubectx vault sops"
 
 ENV NPM_PKG="wrangler hexo"
 
