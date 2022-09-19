@@ -48,7 +48,7 @@ RUN yay -S --save --noconfirm code-server nps && \
 
 USER root
 
-ENV PACMAN_PKG="jdk11-openjdk age fzf tailscale kubectl-bin helm helmfile k9s kubectx vault sops"
+ENV PACMAN_PKG="jdk11-openjdk age fzf kubectl-bin helm k9s kubectx vault sops"
 
 ENV NPM_PKG="wrangler hexo"
 
