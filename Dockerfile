@@ -14,7 +14,7 @@ ENV USER=coder
 ENV ENTRYPOINTD=${HOME}/entrypoint.d
 
 # 安装root必须程序
-RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip autojump upx neofetch ttf-jetbrains-mono rsync rslsync clash python3 nodejs npm go mariadb-clients mycli ydcv && \
+RUN pacman -Syy && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip autojump upx neofetch ttf-jetbrains-mono rsync rslsync clash python3 python-pip nodejs npm go mariadb-clients mycli ydcv && \
   # npm 工具
   npm install --global yarn tyarn commitizen git-cz && \
   # 配置 openssh，这里需要固化 ssh server 的密钥
@@ -48,7 +48,7 @@ RUN yay -S --save --noconfirm code-server nps && \
 
 USER root
 
-ENV PACMAN_PKG="jdk11-openjdk age fzf kubectl-bin helm k9s kubectx vault sops"
+ENV PACMAN_PKG="jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops"
 
 ENV NPM_PKG="wrangler hexo"
 
