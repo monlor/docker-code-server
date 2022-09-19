@@ -44,19 +44,11 @@ RUN yay -S --save --noconfirm code-server nps && \
 
 # 下面是可能经常修改会影响缓存的部分，放在最后
 
-ENV AUR_PKG="kubecm-git kind docker-slim"
-
-RUN yay -S --save --noconfirm ${AUR_PKG} && \
-  # helm plugin 
-  helm plugin install https://github.com/databus23/helm-diff && \
-  helm plugin install https://github.com/jkroepke/helm-secrets && \
-  # 清理缓存
-  yay --noconfirm -Scc && \
-  sudo rm -rf ~/.cache/* ~/go
+# 用户root
 
 USER root
 
-ENV PACMAN_PKG="age fzf tailscale kubectl-bin helm helmfile k9s kubectx vault sops"
+ENV PACMAN_PKG="jdk11-openjdk age fzf tailscale kubectl-bin helm helmfile k9s kubectx vault sops"
 
 ENV NPM_PKG="wrangler hexo"
 
@@ -88,7 +80,19 @@ COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN chmod +x /usr/bin/entrypoint.sh /opt/start.sh /usr/local/bin/*
 
+# 用户coder
+
 USER coder 
+
+ENV AUR_PKG="kubecm-git kind docker-slim"
+
+RUN yay -S --save --noconfirm ${AUR_PKG} && \
+  # helm plugin 
+  helm plugin install https://github.com/databus23/helm-diff && \
+  helm plugin install https://github.com/jkroepke/helm-secrets && \
+  # 清理缓存
+  yay --noconfirm -Scc && \
+  sudo rm -rf ~/.cache/* ~/go
 
 WORKDIR /workspace
 
