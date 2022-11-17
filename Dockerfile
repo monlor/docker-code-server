@@ -55,7 +55,7 @@ ENV KUBECTX_VERSION="v0.9.4"
 RUN set -x && \
     if [ "${TARGETARCH}" = "amd64" ]; then TARGETARCH_A="x86_64"; else TARGETARCH_A=${TARGETARCH}; fi && \
     if [ "${TARGETARCH}" = "arm64" ]; then TARGETARCH_B="armv8"; else TARGETARCH_B=${TARGETARCH}; fi && \
-    if [ "${TARGETARCH}" = "arm64" ]; then TARGETARCH_C="aarch64"; else TARGETARCH_C=${TARGETARCH}; fi && \
+    if [ "${TARGETARCH}" = "arm64" ]; then TARGETARCH_C="aarch64"; elif [ "${TARGETARCH}" = "amd64" ]; then TARGETARCH_C="x86_64"; else TARGETARCH_B=${TARGETARCH}; fi && \
     # tailscale
     curl -fsSL https://tailscale.com/install.sh | sh && \
     # yq
