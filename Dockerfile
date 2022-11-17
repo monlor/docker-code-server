@@ -29,7 +29,7 @@ RUN apt update && apt install -y build-essential cron vim dnsutils net-tools ipu
 # https://github.com/ehang-io/nps/releases
 ENV NPS_VERSION="v0.26.10"
 # https://github.com/Dreamacro/clash/releases
-ENV CLASH_VERSION="v1.11.4"
+ENV CLASH_VERSION="v1.11.8"
 # https://download.docker.com/linux/static/stable/x86_64/
 ENV DOCKER_VERSION="20.10.17"
 # https://github.com/docker-slim/docker-slim/releases
@@ -54,6 +54,7 @@ ENV KUBECTX_VERSION="v0.9.4"
 # 安装常用工具
 RUN set -x && \
     if [ "${TARGETARCH}" = "amd64" ]; then TARGETARCH_A="x86_64"; else TARGETARCH_A=${TARGETARCH}; fi && \
+    if [ "${TARGETARCH}" = "arm64" ]; then TARGETARCH_B="armv8"; else TARGETARCH_B=${TARGETARCH}; fi && \
     # tailscale
     curl -fsSL https://tailscale.com/install.sh | sh && \
     # yq
@@ -72,16 +73,16 @@ RUN set -x && \
     curl -#fSLo /tmp/kubecm.tar.gz https://github.com/sunny0826/kubecm/releases/download/v${KUBECM_VERSION}/kubecm_${KUBECM_VERSION}_Linux_${TARGETARCH_A}.tar.gz && \
     tar xzvf /tmp/kubecm.tar.gz -C /usr/local/bin kubecm && \
     # vault
-    curl -#fSLo /tmp/vault_${VAULT_VERSION}_linux_amd64.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_${TARGETARCH}.zip && \
-    unzip /tmp/vault_${VAULT_VERSION}_linux_amd64.zip -d /usr/local/bin && \
+    curl -#fSLo /tmp/vault_${VAULT_VERSION}_linux_${TARGETARCH}.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_${TARGETARCH}.zip && \
+    unzip /tmp/vault_${VAULT_VERSION}_linux_${TARGETARCH}.zip -d /usr/local/bin && \
     # nps 客户端
     mkdir /tmp/npc && \
     curl -#fSLo /tmp/npc/linux_${TARGETARCH}_client.tar.gz https://github.com/ehang-io/nps/releases/download/${NPS_VERSION}/linux_${TARGETARCH}_client.tar.gz && \
     tar zxvf /tmp/npc/linux_${TARGETARCH}_client.tar.gz -C /tmp/npc && \
     /tmp/npc/npc install && \
     # clash 客户端
-    curl -#fSLo /tmp/clash-linux-${TARGETARCH}.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-${TARGETARCH}-${CLASH_VERSION}.gz && \
-    cat /tmp/clash-linux-${TARGETARCH}.gz | gzip -d > /usr/local/bin/clash && \
+    curl -#fSLo /tmp/clash-linux-${TARGETARCH_B}.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-${TARGETARCH_B}-${CLASH_VERSION}.gz && \
+    cat /tmp/clash-linux-${TARGETARCH_B}.gz | gzip -d > /usr/local/bin/clash && \
     # 安装 docker 客户端
     curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/${TARGETARCH_A}/docker-${DOCKER_VERSION}.tgz && \
     tar xzvf /tmp/docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
