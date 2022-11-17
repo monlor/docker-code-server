@@ -3,6 +3,8 @@ FROM codercom/code-server:4.8.3
 
 LABEL author=monlor
 
+ARG BUILDARCH
+
 # https://github.com/ehang-io/nps/releases
 ENV NPS_VERSION="v0.26.10"
 # https://github.com/Dreamacro/clash/releases
