@@ -33,7 +33,7 @@ if [ ! -f ${HOME}/.oh-my-zsh/oh-my-zsh.sh ]; then
     echo "安装 oh-my-zsh ..."
     rm -rf ${HOME}/.oh-my-zsh
     # 安装 oh-my-zsh
-    echo 'y' | sh -c "$(curl -fsSL https://github.do/https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    echo 'y' | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 # 安装 zsh 插件
