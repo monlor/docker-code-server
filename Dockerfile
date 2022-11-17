@@ -37,7 +37,7 @@ COPY ./extensions /opt/extensions
 USER root
 
 # 安装常用工具
-RUN if [ "${BUILDARCH}" = "amd64" ]; then export BUILDARCH_A="x86_64"; else BUILDARCH_A=${BUILDARCH}; fi; && \
+RUN if [ "${BUILDARCH}" = "amd64" ]; then export BUILDARCH_A="x86_64"; else BUILDARCH_A=${BUILDARCH}; fi && \
     apt update && apt install -y build-essential cron vim dnsutils net-tools iputils-ping iproute2 telnet bat trash-cli openconnect oathtool mariadb-client upx openssh-server python3 python3-pip nodejs npm age rsync tree jq zip fzf golang && \
     # python 工具
     ln -sf /usr/bin/python3 /usr/bin/python && \
