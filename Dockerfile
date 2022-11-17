@@ -55,6 +55,7 @@ ENV KUBECTX_VERSION="v0.9.4"
 RUN set -x && \
     if [ "${TARGETARCH}" = "amd64" ]; then TARGETARCH_A="x86_64"; else TARGETARCH_A=${TARGETARCH}; fi && \
     if [ "${TARGETARCH}" = "arm64" ]; then TARGETARCH_B="armv8"; else TARGETARCH_B=${TARGETARCH}; fi && \
+    if [ "${TARGETARCH}" = "arm64" ]; then TARGETARCH_C="aarch64"; else TARGETARCH_C=${TARGETARCH}; fi && \
     # tailscale
     curl -fsSL https://tailscale.com/install.sh | sh && \
     # yq
@@ -84,7 +85,7 @@ RUN set -x && \
     curl -#fSLo /tmp/clash-linux-${TARGETARCH_B}.gz https://github.com/Dreamacro/clash/releases/download/${CLASH_VERSION}/clash-linux-${TARGETARCH_B}-${CLASH_VERSION}.gz && \
     cat /tmp/clash-linux-${TARGETARCH_B}.gz | gzip -d > /usr/local/bin/clash && \
     # 安装 docker 客户端
-    curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/${TARGETARCH_A}/docker-${DOCKER_VERSION}.tgz && \
+    curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/${TARGETARCH_C}/docker-${DOCKER_VERSION}.tgz && \
     tar xzvf /tmp/docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
     # 安装 kind
     curl -#fSLo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-${TARGETARCH} && \
