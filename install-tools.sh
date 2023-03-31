@@ -80,8 +80,8 @@ tar zxvf ${TEMP_DIR}/helmfile_${HELMFILE_VERSION}_linux_${TARGETARCH}.tar.gz -C 
 # 安装 sops
 curl -#fSLo ${TARGET_PATH}/sops https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.${TARGETARCH}
 # 安装 golang
-curl -#fSLo /tmp/go.tar.gz https://go.dev/dl/go${GOLANG_VERSION}.linux-${TARGETARCH}.tar.gz
-tar zxvf /tmp/go.tar.gz --strip 2 -C ${TARGET_PATH} go/bin
+curl -#fSLo ${TEMP_DIR}/go.tar.gz https://go.dev/dl/go${GOLANG_VERSION}.linux-${TARGETARCH}.tar.gz
+tar zxvf ${TEMP_DIR}/go.tar.gz -C /usr/local/
 
 # 授权，清理
 chmod +x ${TARGET_PATH}/* 

@@ -46,6 +46,7 @@ source \$ZSH/oh-my-zsh.sh
 # env
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
+export GOROOT=/usr/local/go
 export GOPATH=\${HOME}/golang
 export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/local/bin
 # history show timeline
