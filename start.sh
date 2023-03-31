@@ -69,8 +69,8 @@ alias upxx="upx --lzma --ultra-brute"
 alias cp="cp -i"
 alias rm="trash"
 alias k="kubectl"
-alias cat="bat"
-alias ping="sudo ping"
+alias cat="batcat"
+alias ping="ping"
 alias init-git-cz="commitizen init git-cz --save-dev --save-exact"
 
 # plugin
