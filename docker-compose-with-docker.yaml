@@ -7,12 +7,14 @@ services:
     hostname: code-server
     # optional
     environment:
-    # clash subscribe url
+    # clash subscribe url [optional]
     - CLASH_SUB_URL=
-    # ydcv secrets
+    # ydcv secrets [optional]
     - YDCV_YOUDAO_APPID=
     - YDCV_YOUDAO_APPSEC=
-    # code-server password
+    # custom http proxy [optional]
+    - HTTP_PROXY_ADDR=127.0.0.1:7890
+    # code-server password [required]
     - PASSWORD=
     volumes:
     - code-server:/home/coder

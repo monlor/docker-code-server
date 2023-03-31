@@ -5,10 +5,6 @@
 # ydcv环境变量：YDCV_YOUDAO_APPID YDCV_YOUDAO_APPSEC
 # docker dind: DOCKER_DIND_HOST DOCKER_DIND_CERT_PATH
 
-# 启动 resilio sync
-echo "启动同步工具 Resilio Sync ..."
-dumb-init rslsync --webui.listen 0.0.0.0:8888 --storage ~/.local/share/rslsync
-
 # 启动定时任务
 echo "启动定时任务守护程序 ..."
 sudo dumb-init /usr/sbin/crond
@@ -79,6 +75,7 @@ alias rm="trash"
 alias k="kubectl"
 alias cat="bat"
 alias ping="sudo ping"
+alias init-git-cz="commitizen init git-cz --save-dev --save-exact"
 
 # plugin
 [[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
@@ -91,19 +88,22 @@ which kubectl &> /dev/null && source <(kubectl completion zsh)
 which k9s &> /dev/null && source <(k9s completion zsh)
 
 setproxy() {
-    sudo kill -15 `pidof clash` &> /dev/null
-    clash &> /dev/null &
-    export http_proxy=127.0.0.1:7890
-    export https_proxy=127.0.0.1:7890
+    if [ -n "\${CLASH_SUB_URL}" ]; then
+        sudo kill -15 `pidof clash` &> /dev/null
+        clash &> /dev/null &
+    fi
+    export http_proxy=${HTTP_PROXY_ADDR:-127.0.0.1:7890}
+    export https_proxy=${HTTP_PROXY_ADDR:-127.0.0.1:7890}
 }
 
 unsetproxy() {
-    sudo kill -15 `pidof clash` &> /dev/null
+    if [ -n "\${CLASH_SUB_URL}" ]; then
+        sudo kill -15 `pidof clash` &> /dev/null
+    fi
     unset http_proxy
     unset https_proxy
 }
 
 # load user zshrc
 [ -f ${HOME}/.zshrc.user ] && source ${HOME}/.zshrc.user
-[ -f /workspace/.zshrc.user ] && source /workspace/.zshrc.user
 EOF

@@ -19,7 +19,7 @@ deploy with docker compose
 run in your git project
 
 ```bash
-commitizen init git-cz --save-dev --save-exact
+init-git-cz
 git cz
 ```
 
