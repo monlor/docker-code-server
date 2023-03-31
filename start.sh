@@ -30,11 +30,6 @@ if [ -n "${CLASH_SUB_URL}" ]; then
     curl -#fSLo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL}
 fi
 
-# zsh
-if [ ! -f ~/.zshrc ]; then
-    cp -rf /usr/share/oh-my-zsh/zshrc ~/.zshrc
-fi
-
 # 自定义环境变量
 echo "写入 zsh 环境变量配置 ..."
 cat > ${HOME}/.zshrc <<-EOF
