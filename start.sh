@@ -30,6 +30,9 @@ if [ -n "${CLASH_SUB_URL}" ]; then
     curl -#fSLo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL}
 fi
 
+# oh-my-zsh
+
+
 # 自定义环境变量
 echo "写入 zsh 环境变量配置 ..."
 cat > ${HOME}/.zshrc <<-EOF
@@ -39,7 +42,7 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 ZSH_CACHE_DIR=\$HOME/.cache/oh-my-zsh
 if [[ ! -d \$ZSH_CACHE_DIR ]]; then
-  mkdir \$ZSH_CACHE_DIR
+  mkdir -p \$ZSH_CACHE_DIR
 fi
 source \$ZSH/oh-my-zsh.sh
 
