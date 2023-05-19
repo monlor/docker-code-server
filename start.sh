@@ -87,21 +87,17 @@ which kubectl &> /dev/null && source <(kubectl completion zsh)
 which k9s &> /dev/null && source <(k9s completion zsh)
 
 setproxy() {
-    if [ -n "\${CLASH_SUB_URL}" ]; then
-        sudo kill -15 `pidof clash` &> /dev/null
-        clash &> /dev/null &
-    fi
+    sudo kill -15 `pidof clash` &> /dev/null
+    clash &> /dev/null &
     export HTTP_PROXY=${HTTP_PROXY_ADDR:-127.0.0.1:7890}
     export HTTPS_PROXY=${HTTP_PROXY_ADDR:-127.0.0.1:7890}
     export NO_PROXY=localhost,127.0.0.1,.example.com
 }
 
 unsetproxy() {
-    if [ -n "\${CLASH_SUB_URL}" ]; then
-        sudo kill -15 `pidof clash` &> /dev/null
-    fi
-    unset http_proxy
-    unset https_proxy
+    sudo kill -15 `pidof clash` &> /dev/null
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
 }
 
 # load user zshrc
