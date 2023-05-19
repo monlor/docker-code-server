@@ -51,7 +51,7 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOROOT=/usr/local/go
 export GOPATH=\${HOME}/golang
-export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/local/bin
+export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/local/bin:/usr/sbin
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
 # default editor
@@ -91,8 +91,9 @@ setproxy() {
         sudo kill -15 `pidof clash` &> /dev/null
         clash &> /dev/null &
     fi
-    export http_proxy=${HTTP_PROXY_ADDR:-127.0.0.1:7890}
-    export https_proxy=${HTTP_PROXY_ADDR:-127.0.0.1:7890}
+    export HTTP_PROXY=${HTTP_PROXY_ADDR:-127.0.0.1:7890}
+    export HTTPS_PROXY=${HTTP_PROXY_ADDR:-127.0.0.1:7890}
+    export NO_PROXY=localhost,127.0.0.1,.example.com
 }
 
 unsetproxy() {

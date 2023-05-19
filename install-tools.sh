@@ -29,6 +29,10 @@ VAULT_VERSION="1.13.1"
 KUBECTX_VERSION="v0.9.4"
 # https://go.dev/doc/install
 GOLANG_VERSION="1.20.2"
+# https://github.com/argoproj/argo-cd/releases/latest
+ARGOCD_VERSION="v2.6.7"
+
+# TARGETARCH=arm64|amd64
 
 # yq
 curl -#fSLo ${TARGET_PATH}/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${TARGETARCH}
@@ -82,6 +86,8 @@ curl -#fSLo ${TARGET_PATH}/sops https://github.com/mozilla/sops/releases/downloa
 # 安装 golang
 curl -#fSLo ${TEMP_DIR}/go.tar.gz https://go.dev/dl/go${GOLANG_VERSION}.linux-${TARGETARCH}.tar.gz
 tar -zxf ${TEMP_DIR}/go.tar.gz -C /usr/local/
+# argocd
+curl -#fSLo ${TARGET_PATH}/argocd https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-${TARGETARCH}
 
 # 授权，清理
 chmod +x ${TARGET_PATH}/* 
