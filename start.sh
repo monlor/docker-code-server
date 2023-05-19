@@ -95,8 +95,9 @@ setproxy() {
 }
 
 unsetproxy() {
-    sudo kill -15 `pidof clash` &> /dev/null
+    sudo kill -15 \`pidof clash\` &> /dev/null
     unset HTTP_PROXY
+    
     unset HTTPS_PROXY
 }
 
