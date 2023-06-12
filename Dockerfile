@@ -74,8 +74,6 @@ RUN pacman -S --needed --noconfirm ${PACMAN_PKG} && \
 
 COPY ./start.sh /opt/start.sh
 
-COPY ./extensions /opt/extensions
-
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN chmod +x /usr/bin/entrypoint.sh /opt/start.sh /usr/local/bin/*
