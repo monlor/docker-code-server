@@ -22,7 +22,12 @@ if [ -n "${CLASH_SUB_URL}" ]; then
         mkdir -p ${HOME}/.config/clash
     fi
     curl -#fSLo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL}
-    echo "@daily curl -#fSLo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL}" | crontab - 
+    
+    # 添加定时任务
+    crontab -l > /tmp/crontab.txt
+    sed -i '/#clash/d' /tmp/crontab.txt
+    echo "@daily curl -#fSLo ${HOME}/.config/clash/config.yaml ${CLASH_SUB_URL} #clash" >> /tmp/crontab.txt
+    cat /tmp/crontab.txt | crontab - 
 fi
 
 # 自定义环境变量
