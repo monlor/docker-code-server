@@ -48,7 +48,7 @@ RUN yay -S --save --noconfirm code-server frpc && \
 
 USER root
 
-ENV PACMAN_PKG="buildkit jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops docker-compose"
+ENV PACMAN_PKG="buildkit jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops docker-compose maven"
 
 ENV NPM_PKG="wrangler hexo"
 
