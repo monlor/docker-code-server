@@ -48,24 +48,13 @@ RUN yay -S --save --noconfirm code-server frpc && \
 
 USER root
 
-ENV PACMAN_PKG="buildkit jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops"
+ENV PACMAN_PKG="buildkit jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops docker-compose"
 
 ENV NPM_PKG="wrangler hexo"
-
-# https://download.docker.com/linux/static/stable/x86_64/
-ENV DOCKER_VERSION="20.10.17"
-# https://github.com/docker-slim/docker-slim/releases
-ENV DOCKER_SLIM_VERSION="1.37.6"
 
 RUN pacman -S --needed --noconfirm ${PACMAN_PKG} && \
   # npm 工具
   npm install --global ${NPM_PKG} && \
-  # 安装 docker 客户端
-  curl -#fSLo /tmp/docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
-  tar xzvf /tmp/docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/bin docker/docker && \
-  # 安装 docker-slim 客户端
-  curl -#fSLo /tmp/dist_linux.tar.gz https://downloads.dockerslim.com/releases/${DOCKER_SLIM_VERSION}/dist_linux.tar.gz && \
-  tar zxvf /tmp/dist_linux.tar.gz --strip 1 -C /usr/local/bin dist_linux/ && \
   # 安装 easyoc，easy openconnect
   curl -#fSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
   # 清理缓存
@@ -82,7 +71,7 @@ RUN chmod +x /usr/bin/entrypoint.sh /opt/start.sh /usr/local/bin/*
 
 USER coder 
 
-ENV AUR_PKG="kubecm-git kind docker-slim"
+ENV AUR_PKG="kubecm-git kind docker-slim docker-cli-bin"
 
 RUN yay -S --save --noconfirm ${AUR_PKG} && \
   # helm plugin 
