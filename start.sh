@@ -55,6 +55,8 @@ export BAT_THEME="GitHub"
 export DOCKER_HOST=tcp://${DOCKER_DIND_HOST:-docker}:2376
 export DOCKER_CERT_PATH=${DOCKER_DIND_CERT_PATH:-"/certs/client"}
 export DOCKER_TLS_VERIFY=1
+# buildkitd
+export BUILDKITD_HOST=tcp://${BUILDKITD_HOST:-buildkitd}:1234
 # ydcv
 export YDCV_YOUDAO_APPID=${YDCV_YOUDAO_APPID}
 export YDCV_YOUDAO_APPSEC=${YDCV_YOUDAO_APPSEC}
