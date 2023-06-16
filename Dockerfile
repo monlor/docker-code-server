@@ -50,7 +50,7 @@ RUN yay -S --save --noconfirm code-server frpc && \
 
 USER root
 
-ENV PACMAN_PKG="buildkit jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops docker-compose maven"
+ENV PACMAN_PKG="buildkit jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops docker-compose maven kustomize"
 
 ENV NPM_PKG="wrangler hexo"
 
@@ -61,6 +61,7 @@ RUN pacman -S --needed --noconfirm ${PACMAN_PKG} && \
   curl -#fSLo /usr/local/bin/easyoc https://github.com/monlor/shell-utils/raw/master/easyoc && \
   # 清理缓存
   pacman --noconfirm -Scc && \
+  npm cache clean --force && \
   rm -rf /tmp/cache
 
 COPY ./start.sh /opt/start.sh
