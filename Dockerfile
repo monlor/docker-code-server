@@ -50,7 +50,7 @@ RUN yay -S --save --noconfirm code-server frpc && \
 
 USER root
 
-ENV PACMAN_PKG="buildkit jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops docker-compose maven kustomize"
+ENV PACMAN_PKG="buildkit jdk11-openjdk age fzf helmfile kubectl-bin helm k9s kubectx vault sops docker-compose maven kustomize argocd"
 
 ENV NPM_PKG="wrangler hexo"
 
@@ -78,8 +78,8 @@ ENV AUR_PKG="kubecm-git kind docker-slim docker-cli-bin"
 
 RUN yay -S --save --noconfirm ${AUR_PKG} && \
   # helm plugin 
-  helm plugin install https://github.com/databus23/helm-diff && \
-  helm plugin install https://github.com/jkroepke/helm-secrets && \
+  helm plugin install https://github.com/databus23/helm-diff --version 3.5.0 && \
+  helm plugin install https://github.com/jkroepke/helm-secrets --version 3.13.0 && \
   # 清理缓存
   yay --noconfirm -Scc && \
   sudo rm -rf ~/.cache/* ~/go

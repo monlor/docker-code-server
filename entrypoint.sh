@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+export EXTRA_PARAMS=""
+
 # We do this first to ensure sudo works below when renaming the user.
 # Otherwise the current container UID may not exist in the passwd database.
 eval "$(fixuid -q)"
@@ -24,7 +26,12 @@ if [ -d "${ENTRYPOINTD}" ]; then
   find "${ENTRYPOINTD}" -type f -executable -print -exec {} \;
 fi
 
+# proxy domain
+if [ -n "${PROXY_DOMAIN}" ]; then
+  EXTRA_PARAMS="--proxy-domain ${PROXY_DOMAIN} ${EXTRA_PARAMS}"
+fi
+
 # custom scripts
 /opt/start.sh
 
-exec dumb-init /usr/bin/code-server "$@"
+exec dumb-init /usr/bin/code-server "$@" "${EXTRA_PARAMS}"
