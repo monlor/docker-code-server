@@ -34,4 +34,4 @@ fi
 # custom scripts
 /opt/start.sh
 
-exec dumb-init /usr/bin/code-server "$@" "${EXTRA_PARAMS}"
+exec dumb-init /usr/bin/code-server "$@" ${EXTRA_PARAMS}
