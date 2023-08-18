@@ -14,7 +14,7 @@ ENV USER=coder
 ENV ENTRYPOINTD=${HOME}/entrypoint.d
 
 # 安装root必须程序
-RUN pacman -Syu --needed --noconfirm && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip unzip autojump upx neofetch ttf-jetbrains-mono rsync clash python3 python-pip python-pipx nodejs npm go mariadb-clients mycli && \
+RUN pacman -Syu --needed --noconfirm && pacman -S --needed --noconfirm fakeroot sudo base-devel vi vim yay git zsh dnsutils net-tools inetutils iputils cronie oh-my-zsh-git zsh-autosuggestions zsh-syntax-highlighting openssh bat trash-cli openconnect oath-toolkit go-yq tree jq zip unzip autojump upx neofetch ttf-jetbrains-mono rsync clash python3 python-pip python-pipx nodejs npm go mariadb-clients mycli nali-go lua luarocks cmake && \
   # npm 工具
   npm install --global yarn tyarn commitizen git-cz && \
   # pip 工具

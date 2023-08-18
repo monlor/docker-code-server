@@ -9,6 +9,7 @@
 echo "启动定时任务守护程序 ..."
 sudo dumb-init /usr/sbin/crond
 
+echo "启动ssh服务..."
 # 配置启动 openssh server
 echo "n" | ssh-keygen -q -t rsa -b 2048 -f /home/coder/.ssh/ssh_host_rsa_key -N "" || true
 echo "n" | ssh-keygen -q -t ecdsa -f /home/coder/.ssh/ssh_host_ecdsa_key -N "" || true
@@ -48,6 +49,7 @@ export GO111MODULE=on
 export GOPROXY=${GOPROXY:-https://goproxy.cn}
 export GOROOT=/usr/lib/go
 export GOPATH=\${HOME}/golang
+export LUA_CPATH=\${HOME}/.luarocks/lib/lua/5.4/?.so
 export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH:/usr/local/bin:/usr/sbin
 # history show timeline
 export HIST_STAMPS="yyyy-mm-dd"
